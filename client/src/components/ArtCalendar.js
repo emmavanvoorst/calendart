@@ -1,5 +1,7 @@
 import Calendar from 'react-calendar';
-import './App.css';
+import 'react-calendar/dist/Calendar.css';
+
+
 
 const ArtCalendar = () => {
     return (

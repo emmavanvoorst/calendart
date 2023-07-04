@@ -1,13 +1,24 @@
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {styled} from "styled-components";
 import NavBar from "./components/NavBar";
-import ArtCalendar from "./components/ArtCalendar";
+import HomePage from "./components/HomePage";
+
+
+const Container = styled.div`
+ background-color: darkseagreen;
+ height: 100em;
+`
 
 function App() {
   return (
-    <div>
+    <Router>
+    <Container>
       <NavBar />
-      <ArtCalendar/>
-    </div>
+      <Routes>
+      <Route path ="/" element = {<HomePage/>}/>
+      </Routes>
+    </Container>
+    </Router>
   );
 }
 
