@@ -4,6 +4,7 @@ const express = require("express");
 const morgan = require("morgan");
 
 const {addEvent} = require("./handlers/addevent")
+const {getAllEvents} = require("./handlers/getAllEvents")
 
 const PORT = 4000;
 
@@ -31,7 +32,12 @@ express()
     res.json({ message: "Hello from server!" })
   })
   
+//get all events
+  .get("/calend_art/events/read", getAllEvents)
+
   .post("/calend_art/events/create", addEvent)
+
+
 
 .use((req, res) => res.status(404).type("txt").send("🤷‍♂️"))
 

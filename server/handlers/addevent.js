@@ -9,7 +9,7 @@ const options = {
 };
 
 const addEvent = async (req, res) => {
-  const event = new MongoClient("mongodb+srv://emmavanvoorst:wiPeerIXfof5NxAC@cluster0.kabcpch.mongodb.net/?retryWrites=true&w=majority", options);
+  const event = new MongoClient( MONGO_URI, options);
   
   await event.connect();
 
