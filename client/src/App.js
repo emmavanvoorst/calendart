@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {styled} from "styled-components";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
+import AddEvent from "./components/AddEvent";
 
 
 const Container = styled.div`
@@ -12,10 +13,12 @@ const Container = styled.div`
 function App() {
   return (
     <Router>
-    <Container>
       <NavBar />
+    <Container>
+      
       <Routes>
       <Route path ="/" element = {<HomePage/>}/>
+      <Route path ="/addevent" element = {<AddEvent/>}/>
       </Routes>
     </Container>
     </Router>

@@ -1,18 +1,26 @@
 [
     {
         "title": "Sexe, désirs et data",
-        "location": "Centre PHI",
-        "start_date": "August 1",
-        "end-date": "October 31",
+        "location": {"name": "Centre PHI", "address": "407 rue Saint-Pierre, Montréal, Québec, H2Y 2M3"},
+        "start_date": "August 1, 2023",
+        "end_date": "October 31, 2023",
         "url": "https://phi.ca/fr/evenements/sexe-desirs-data/",
         "description": "Sexe, désirs et data est une expérience interactive et collective qui explore les liens entre sexualités et technologies."
     },
     {
-        "title": "Sexe, désirs et data",
-        "location": "Centre PHI",
-        "start_date": "August 1",
-        "end-date": "October 31",
-        "url": "https://phi.ca/fr/evenements/sexe-desirs-data/",
-        "description": "Sexe, désirs et data est une expérience interactive et collective qui explore les liens entre sexualités et technologies." 
+        "title": "Double vernissage - Luke Parnell & Alan Syliboy",
+        "location": {"name": "La Guilde", "address": "1356 Rue Sherbrooke Ouest, Montréal, Canada"},
+        "start_date": "July 20, 2023",
+        "end_date": "September 10, 2023",
+        "url": "https://laguilde.com/en/blogs/expositions/luke-parnell-starlight",
+        "description": "The multidisciplinary artist delves into the relationship between oral histories and Indigenous artistic practices on the Northwest Coast, particularly interested in exploring narratives of transformation" 
+    },
+    {
+        "title": "Vernissage de l'ALPABEM",
+        "location": {"name": "ALPABEM", "address": "645 Boulevard des Laurentides, Laval, Canada"},
+        "start_date": "October 12, 2023",
+        "end_date": "October 31, 2023",
+        "url": "https://www.alpabem.qc.ca/",
+        "description": "Voici notre 7e édition VERNISSAGE au profit des familles qui composent avec la maladie mentale d’un proche" 
     }
 ]

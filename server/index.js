@@ -3,6 +3,8 @@
 const express = require("express");
 const morgan = require("morgan");
 
+const {addEvent} = require("./handlers/addevent")
+
 const PORT = 4000;
 
 express()
@@ -29,6 +31,8 @@ express()
     res.json({ message: "Hello from server!" })
   })
   
+  .post("/calend_art/events/create", addEvent)
 
+.use((req, res) => res.status(404).type("txt").send("🤷‍♂️"))
 
-.listen(PORT, () => console.info(`Listening on port ${PORT}`));
+.listen(PORT, () => console.info(`Listening on port ${PORT}`)); 
