@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { styled } from "styled-components";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const Container = styled.form`
   display: flex;
@@ -36,6 +39,7 @@ const SubmitInput = styled.input`
 `;
 const Form = () => {
   const [hour, setHour] = useState();
+  const [startDate, setStartDate] = useState(new Date());
 
   const hours = Array.from({ length: 24 }, (_, i) => i + 1);
 
@@ -60,20 +64,16 @@ const Form = () => {
         </Label>
         <Label>
           Start Date
-          <Input type="text" name="date" />
+          <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
         </Label>
         <Label>
           End Date
-          <Input type="text" name="date" />
+          <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
         </Label>
         <Label>
           Start Time
           {/* <dropdown label="What Time" options={hours} onChange={handleChange} /> */}
           <Input type="text" name="time" />
-        </Label>
-        <Label>
-          End Date
-          <Input type="text" name="date" />
         </Label>
         <Label>
           Link to Event

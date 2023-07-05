@@ -5,6 +5,8 @@ const morgan = require("morgan");
 
 const {addEvent} = require("./handlers/addevent")
 const {getAllEvents} = require("./handlers/getAllEvents")
+const {getOneEvent} = require("./handlers/getOneEvent")
+const {deleteEvent} = require("./handlers/deleteEvent")
 
 const PORT = 4000;
 
@@ -34,9 +36,12 @@ express()
   
 //get all events
   .get("/calend_art/events/read", getAllEvents)
-
+//get one event
+  .get("/calend_art/events/:eventId", getOneEvent)
+//create an event
   .post("/calend_art/events/create", addEvent)
-
+//delete an event
+  .delete("calendar/events/delete/:eventId", deleteEvent)
 
 
 .use((req, res) => res.status(404).type("txt").send("🤷‍♂️"))

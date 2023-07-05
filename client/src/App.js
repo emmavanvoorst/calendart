@@ -3,11 +3,12 @@ import {styled} from "styled-components";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import AddEvent from "./components/AddEvent";
+import Events from "./components/Events";
 
 
 const Container = styled.div`
  background-color: darkseagreen;
- height: 100em;
+ height: 100%;
 `
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <Routes>
       <Route path ="/" element = {<HomePage/>}/>
       <Route path ="/addevent" element = {<AddEvent/>}/>
+      <Route path ="/events" element = {<Events/>}/>
       </Routes>
     </Container>
     </Router>

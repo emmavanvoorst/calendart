@@ -31,10 +31,12 @@ const getAllEvents = async (req, res) => {
   } catch (error) {
     console.error("An error occurred while retrieving events:", error);
     res.status(500).json({ status: 500, message: "Internal server error" });
-  }
-
+  }finally{
     client.close();
     console.log("disconnected!");
+  }
+
+    
   };
 
 module.exports = { getAllEvents };

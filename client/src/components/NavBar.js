@@ -1,11 +1,12 @@
 import { useState } from "react";
 import {styled} from "styled-components";
 import moment from "moment";
-import { useNavigate, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 
 const Container =styled.div`
  display: flex;
+ justify-content: space-between;
  align-items: center;
  position: fixed;
  width: 100%;
@@ -20,6 +21,7 @@ const NavItem =styled.div`
  font-weight: bold;
  margin-right: 2em;
  cursor: pointer;
+ 
 `
 const NavTitle =styled.div`
  color: white;
@@ -34,12 +36,16 @@ const NavTitle =styled.div`
 const NLink = styled(NavLink)`
  text-decoration: none;
  color:white;
+ transition: 500ms;
+ &:hover{
+  color: pink;
+ }
 `
 
 
 const NavBar = () => {
     const [hover, setHover] = useState(false);
-    const navigate = useNavigate();
+
 
     const handleMouseEnter = () => {
         setHover(true);   
@@ -47,17 +53,15 @@ const NavBar = () => {
       const handleMouseLeave = () => {
         setHover(false);
       };
-      const handleClick = () => {
-        navigate("/addevent");
-      };
+
 
     return(
         <Container>
         <NavTitle 
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}> <NLink to="/">{hover === false ? <p>CALEND&apos;ART</p>: <p>{moment().format("DD/MM/YYYY")}</p>}</NLink></NavTitle> 
-        <NavItem>CALENDAR</NavItem>
-        <NavItem onClick={handleClick}>ADD EVENT</NavItem> 
+        <NavItem><NLink to="/events">EVENTS</NLink></NavItem>
+        <NavItem><NLink to="/addevent">ADD EVENT</NLink></NavItem> 
         </Container>
     )
 }

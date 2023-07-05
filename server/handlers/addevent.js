@@ -9,11 +9,11 @@ const options = {
 };
 
 const addEvent = async (req, res) => {
-  const event = new MongoClient( MONGO_URI, options);
+  const client = new MongoClient( MONGO_URI, options);
   
-  await event.connect();
+  await client.connect();
 
-  const db = event.db("calend_art");
+  const db = client.db("calend_art");
   console.log("connected!");
 
   try {
@@ -25,7 +25,7 @@ const addEvent = async (req, res) => {
       .json({ status: 500, data: req.body, message: error.message });
   }
 
-  event.close();
+  client.close();
   console.log("disconnected!");
 };
 

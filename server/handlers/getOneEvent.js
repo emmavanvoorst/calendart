@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -10,27 +10,28 @@ const options = {
 ("use strict");
 
 /**
- * getItem fetches an event using the itemId set from the request
+ * getOneEvent fetches an event using the eventId sent from the request
  *  parameter from MongoDB and returns in the response the event.
  * @param request
  * @param response
  */
-const getItem = async (request, response) => {
+
+const getOneEvent = async (request, response) => {
   const client = new MongoClient(MONGO_URI, options);
-  const itemId = request.params.itemId;
+  const eventId = request.params.eventId;
 
   try {
     await client.connect();
-    const db = client.db("e-commerce");
+    const db = client.db("calend_art");
     console.log("connected!");
 
     const result = await db
-      .collection("items")
-      .findOne({ _id: Number(itemId) });
+      .collection("events")
+      .findOne({ _id: new ObjectId(eventId) })
     result
       ? response
           .status(200)
-          .json({ status: 200, data: result, message: "item details" })
+          .json({ status: 200, data: result, message: "event details" })
       : response.status(404).json({ status: 404, message: "Not Found" });
   } catch (error) {
     console.error(error);
@@ -38,9 +39,11 @@ const getItem = async (request, response) => {
       status: 500,
       message: "Server error",
     });
-  }
-  client.close();
+  }finally{
+    client.close();
   console.log("disconnected!");
+  }
+  
 };
 
-module.exports = { getItem };
+module.exports = { getOneEvent };
