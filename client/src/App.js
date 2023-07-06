@@ -7,8 +7,7 @@ import Events from "./components/Events";
 
 
 const Container = styled.div`
- background-color: darkseagreen;
- height: 100%;
+background-color: darkseagreen;
 `
 
 function App() {
