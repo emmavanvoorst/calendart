@@ -9,15 +9,33 @@ const options = {
 };
 
 const addEvent = async (req, res) => {
-  const client = new MongoClient( MONGO_URI, options);
-  
+  const client = new MongoClient(MONGO_URI, options);
+
+try {
   await client.connect();
 
   const db = client.db("calend_art");
   console.log("connected!");
 
-  try {
-    await db.collection("events").insertOne({ ...req.body, start_date: new Date(req.body.start_date), end_date: new Date(req.body.end_date) });
+  //form validation
+  const {
+    name,
+    title,
+    address,
+    startDate,
+    endDate,
+    startTime,
+    eventLink,
+    desc,
+  } = req.body;
+
+  
+  
+    await db.collection("events").insertOne({
+      ...req.body,
+      start_date: new Date(req.body.start_date),
+      end_date: new Date(req.body.end_date),
+    });
     res.status(201).json({ status: 201, data: req.body });
   } catch (error) {
     res

@@ -1,4 +1,4 @@
-import EventCard from "./EventCard";
+import EventCard from "./components/EventCard";
 import {styled} from "styled-components";
 
 const Container = styled.div`

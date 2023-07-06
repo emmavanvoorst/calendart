@@ -1,7 +1,7 @@
 
 
-import Hero from "./Hero";
-import ArtCalendar from "./ArtCalendar";
+import Hero from "./components/Hero";
+import ArtCalendar from "./components/ArtCalendar";
 
 const HomePage = () => {
 

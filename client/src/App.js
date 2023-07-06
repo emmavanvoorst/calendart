@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import {styled} from "styled-components";
 import NavBar from "./components/NavBar";
-import HomePage from "./components/HomePage";
-import AddEvent from "./components/AddEvent";
-import Events from "./components/Events";
+import SignIn from "./components/SignIn";
+import HomePage from "./HomePage";
+import AddEvent from "./AddEventPage";
+import Events from "./AllEventsPage";
 import GlobalStyle from "./components/context/GlobalStyle";
 
 
@@ -20,6 +21,7 @@ function App() {
       
       <Routes>
       <Route path ="/" element = {<HomePage/>}/>
+      <Route path ="/signin" element = {<SignIn/>}/>
       <Route path ="/addevent" element = {<AddEvent/>}/>
       <Route path ="/events" element = {<Events/>}/>
       </Routes>

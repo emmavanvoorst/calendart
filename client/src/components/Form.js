@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import DatePicker from "react-datepicker";
 // import TimePicker from "react-time-picker";
@@ -38,7 +38,12 @@ const SubmitInput = styled.button`
   cursor: pointer;
   background-color: pink;
   padding: 1em 3em 1em 3em;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 `;
+
 const Form = () => {
   // const [value, onChange] = useState("10:00");
   const [formData, setFormData] = useState({
@@ -51,11 +56,35 @@ const Form = () => {
     eventLink: "",
     desc: "",
   });
+
   // const [value, setValue] = useState('')
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    const isFormEmpty = Object.values(formData).some(value => value === '' || value === undefined);
+  console.log(formData)
+    setDisabled(isFormEmpty);
+  }, [formData]);
 
   const handleSubmit = () => {
+    if (
+      !formData.title ||
+      !formData.name ||
+      !formData.address ||
+      !formData.startDate ||
+      !formData.endDate ||
+      !formData.startTime ||
+      !formData.eventLink ||
+      !formData.desc
+    ) {
+      window.alert("Please fill in all the fields");
+      return;
+    }
+
+    console.log(formData.startTime);
     fetch("/calend_art/events/create", {
       method: "POST",
+
       body: JSON.stringify({
         title: formData.title,
         location: {
@@ -73,18 +102,19 @@ const Form = () => {
         "Content-Type": "application/json",
       },
     })
-    .then((res)=> res.json())
-    .then((json)=>{
-      const { status, error } = json;
-      if(status === 201){
-        window.alert("success")
-      }else{
-        console.log(error)
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        const { status, error } = json;
+        if (status === 201) {
+          window.alert("success");
+        } else {
+          console.log(error);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -108,9 +138,9 @@ const Form = () => {
             type="text"
             name="name"
             placeholder="Name of Venue"
-            value={formData.location}
+            value={formData.name}
             onChange={(event) =>
-              setFormData({ ...formData, location: event.target.value })
+              setFormData({ ...formData, name: event.target.value })
             }
           />
         </Label>
@@ -130,6 +160,8 @@ const Form = () => {
           Start Date
           <DatePicker
             selected={formData.startDate}
+            
+            // maxDate={new Date()}
             onChange={(date) => setFormData({ ...formData, startDate: date })}
           />
         </Label>
@@ -137,6 +169,7 @@ const Form = () => {
           End Date
           <DatePicker
             selected={formData.endDate}
+            minDate={new Date(formData.startDate)}
             onChange={(date) => setFormData({ ...formData, endDate: date })}
           />
         </Label>
@@ -149,7 +182,9 @@ const Form = () => {
             min="09:00"
             max="18:00"
             value={formData.time}
-            onChange={(time) => setFormData({ ...formData, startTime: time })}
+            onChange={(time) =>
+              setFormData({ ...formData, startTime: time.target.value })
+            }
           />
         </Label>
         <Label>
@@ -177,7 +212,9 @@ const Form = () => {
             }
           />
         </Label>
-        <SubmitInput onClick={handleSubmit}>Create Event</SubmitInput>
+        <SubmitInput onClick={handleSubmit} disabled={disabled}>
+          Create Event
+        </SubmitInput>
       </Container>
     </>
   );
