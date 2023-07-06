@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 import DatePicker from "react-datepicker";
+// import TimePicker from "react-time-picker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import "react-time-picker/dist/TimePicker.css";
+// import 'react-clock/dist/Clock.css';
 
-const Container = styled.form`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,31 +23,68 @@ const Input = styled.input`
   margin-left: 1em;
   width: 15em;
   height: 2em;
+  font-family: "Roboto Mono", monospace;
   &:focus {
     border: none;
   }
 `;
-const DescInput = styled.input`
+const DescInput = styled.textarea`
   border: none;
   background-color: white;
   margin-left: 1em;
-  width: 20em;
-  height: 7em;
 `;
-const SubmitInput = styled.input`
+const SubmitInput = styled.button`
   all: unset;
   cursor: pointer;
   background-color: pink;
   padding: 1em 3em 1em 3em;
 `;
 const Form = () => {
-  const [hour, setHour] = useState();
-  const [startDate, setStartDate] = useState(new Date());
+  // const [value, onChange] = useState("10:00");
+  const [formData, setFormData] = useState({
+    title: "",
+    name: "",
+    address: "",
+    startDate: new Date(),
+    endDate: new Date(),
+    startTime: "",
+    eventLink: "",
+    desc: "",
+  });
+  // const [value, setValue] = useState('')
 
-  const hours = Array.from({ length: 24 }, (_, i) => i + 1);
-
-  const handleChange = (event) => {
-    setHour(event.target.value);
+  const handleSubmit = () => {
+    fetch("/calend_art/events/create", {
+      method: "POST",
+      body: JSON.stringify({
+        title: formData.title,
+        location: {
+          name: formData.name,
+          address: formData.address,
+        },
+        start_date: formData.startDate.valueOf(),
+        end_date: formData.endDate.valueOf(),
+        start_time: formData.startTime,
+        url: formData.eventLink,
+        description: formData.desc,
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res)=> res.json())
+    .then((json)=>{
+      const { status, error } = json;
+      if(status === 201){
+        window.alert("success")
+      }else{
+        console.log(error)
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   };
 
   return (
@@ -52,38 +92,92 @@ const Form = () => {
       <Container>
         <Label>
           Event Title
-          <Input type="text" name="title" />
+          <Input
+            type="text"
+            name="title"
+            placeholder="Event Title"
+            value={formData.title}
+            onChange={(event) =>
+              setFormData({ ...formData, title: event.target.value })
+            }
+          />
         </Label>
         <Label>
-          Name of Venue
-          <Input type="text" name="location" />
+          Name of Location
+          <Input
+            type="text"
+            name="name"
+            placeholder="Name of Venue"
+            value={formData.location}
+            onChange={(event) =>
+              setFormData({ ...formData, location: event.target.value })
+            }
+          />
         </Label>
         <Label>
           Address
-          <Input type="text" name="address" />
+          <Input
+            type="text"
+            name="address"
+            placeholder="Address"
+            value={formData.address}
+            onChange={(event) =>
+              setFormData({ ...formData, address: event.target.value })
+            }
+          />
         </Label>
         <Label>
           Start Date
-          <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+          <DatePicker
+            selected={formData.startDate}
+            onChange={(date) => setFormData({ ...formData, startDate: date })}
+          />
         </Label>
         <Label>
           End Date
-          <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
+          <DatePicker
+            selected={formData.endDate}
+            onChange={(date) => setFormData({ ...formData, endDate: date })}
+          />
         </Label>
         <Label>
           Start Time
-          {/* <dropdown label="What Time" options={hours} onChange={handleChange} /> */}
-          <Input type="text" name="time" />
+          <input
+            type="time"
+            id="appt"
+            name="appt"
+            min="09:00"
+            max="18:00"
+            value={formData.time}
+            onChange={(time) => setFormData({ ...formData, startTime: time })}
+          />
         </Label>
         <Label>
           Link to Event
-          <Input type="text" name="website" />
+          <Input
+            type="text"
+            name="website"
+            placeholder="Link to Event"
+            value={formData.eventLink}
+            onChange={(event) =>
+              setFormData({ ...formData, eventLink: event.target.value })
+            }
+          />
         </Label>
         <Label>
           Description
-          <DescInput type="text" name="desc" />
+          <DescInput
+            type="text"
+            name="desc"
+            rows="4"
+            cols="35"
+            value={formData.desc}
+            onChange={(event) =>
+              setFormData({ ...formData, desc: event.target.value })
+            }
+          />
         </Label>
-        <SubmitInput type="submit" value="Create Event" />
+        <SubmitInput onClick={handleSubmit}>Create Event</SubmitInput>
       </Container>
     </>
   );
