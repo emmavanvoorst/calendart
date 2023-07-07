@@ -1,4 +1,7 @@
+import { useState, useContext} from "react";
+import { UserContext } from "./context/UserContext";
 import {styled} from "styled-components";
+
 
 const Container = styled.div`
 display: flex;
@@ -31,6 +34,12 @@ const Input = styled.input`
 `
 
 const SignIn = () => {
+    // const { currentUser, setCurrentUser } = useContext(UserContext);
+
+    const handleClick= ()=>{
+        // setCurrentUser()
+    }
+
     return(
         <Container>
         <Admin>

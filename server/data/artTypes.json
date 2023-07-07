@@ -1,0 +1,32 @@
+[
+    {
+        "type": "Mixed Media",
+        "description": "Mixed media describes artwork in which more than one medium or material has been employed.",
+        "wikiUrl": "https://en.wikipedia.org/wiki/Mixed_media"
+    },
+    {
+        "type": "Ceramics",
+        "description": "Common examples are earthenware, porcelain, and brick.",
+        "wikiUrl": "https://en.wikipedia.org/wiki/Ceramic#cite_note-2"
+    },
+    {
+        "type": "Painting",
+        "description": "Painting is an important form of visual art, bringing in elements such as drawing, composition, gesture, narration, and abstraction.",
+        "wikiUrl": "https://en.wikipedia.org/wiki/Painting"
+    },
+    {
+        "type": "Collage",
+        "description": "Collage is a technique of art creation by which art results from an assemblage of different forms, thus creating a new whole.",
+        "wikiUrl": "https://en.wikipedia.org/wiki/Collage"
+    },
+    {
+        "type": "Photography",
+        "description": "The art or practice of taking and processing photographs.",
+        "wikiUrl": "https://en.wikipedia.org/wiki/Photography"
+    },
+    {
+        "type": "Fiber Arts",
+        "description": "Fiber art is a style of fine art which uses textiles such as fabric, yarn, and natural and synthetic fibers.",
+        "wikiUrl": "https://en.wikipedia.org/wiki/Fiber_art"
+    },
+]
