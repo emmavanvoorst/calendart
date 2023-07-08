@@ -4,7 +4,7 @@ import { SquircleLoader } from "react-awesome-loaders";
 import moment from "moment";
 
 const Wrapper = styled.div`
-  padding: 0 15em;
+  /* padding: 0 15em; */
   display: flex;
   flex-wrap: wrap;
 `
@@ -34,10 +34,26 @@ const Loading =styled.div`
   align-items: center;
   height: 100vh;
 `
-
+const Delete= styled.button`
+`
 const EventCard = () => {
   const [events, setEvents] = useState([]);
-  console.log({ events });
+
+
+  // const HandleClick = () => {
+  //   fetch("calendar/events/delete/:eventId", {
+  //     method: "DELETE",
+
+  //     body: JSON.stringify({
+  //       username,
+  //       password,
+  //     }),
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+
   useEffect(() => {
     let mounted = true;
     console.log({ events });
@@ -61,6 +77,8 @@ const EventCard = () => {
     };
   }, []);
 
+
+
   return (
     <Wrapper>
       {events.length > 0 ? (
@@ -75,7 +93,7 @@ const EventCard = () => {
             <div>Description: {event.description}</div>
             <div>Website: <Link href={event.url}>Go to {event.location.name}</Link></div>
             
-            
+            <Delete>Delete</Delete>
           </EventContainer>
         ))
       ) : (

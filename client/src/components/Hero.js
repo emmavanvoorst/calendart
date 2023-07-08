@@ -47,7 +47,7 @@ const Hero = () => {
         <Text>
           <Title>Calend'Art</Title>
           <Desc>Find local Montreal art events</Desc>
-          <Date>Today is {moment().format("dddd, MMMM, yyy")}</Date>
+          {/* <Date>Today is {moment().format("dddd, MMMM, yyy")}</Date> */}
         </Text>
       </Flex>
     </Container>

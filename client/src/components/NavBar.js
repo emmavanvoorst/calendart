@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
 import { styled } from "styled-components";
-import moment from "moment";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
+
+import {RxHamburgerMenu} from 'react-icons/rx';
+import moment from "moment";
 
 const Container = styled.div`
   z-index: 2001;
@@ -27,8 +29,11 @@ const NavTitle = styled.div`
   font-weight: bold;
   font-size: 4rem;
   margin: 0.5em 4em 0 1em;
-  transition: 1000ms;
+  transition: 200ms;
   cursor: pointer;
+  @media screen and (max-width: 700px){
+    font-size: 2rem;
+  }
 `;
 
 const Title = styled.p`
@@ -54,6 +59,19 @@ const Button = styled.button`
   &:hover{
     background-color: white;
     color: darkseagreen;
+  }
+`
+
+const HamburgerMenu = styled.div`
+display: flex;
+flex-direction: row;
+@media screen and (max-width: 700px){
+    display: none;
+  }
+`
+const HamIcon = styled.div`
+@media screen and (min-width: 700px){
+    display: none;
   }
 `
 
@@ -88,6 +106,7 @@ const NavBar = () => {
           )}
         </NLink>
       </NavTitle>
+      <HamburgerMenu>
       <NavItem>
         <NLink to="/events">EVENTS</NLink>
       </NavItem>
@@ -98,6 +117,8 @@ const NavBar = () => {
       </NavItem>)}
       {currentUser &&
       <Button onClick={handleSignout}>SIGN OUT</Button>}
+      </HamburgerMenu>
+      <HamIcon><RxHamburgerMenu size={40} color="white"/></HamIcon>
     </Container>
   );
 };

@@ -37,7 +37,12 @@ const Label = styled.label`
   padding-bottom: 3em;
   color: white;
 `;
-const Input = styled.input``;
+const Text = styled.div`
+margin-bottom: 2em;
+`
+const Input = styled.input`
+margin-bottom: 0.5em;
+`;
 const Button = styled.button``;
 
 const SignIn = () => {
@@ -45,7 +50,6 @@ const SignIn = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  console.log({ username, password });
 
   const HandleClick = () => {
     fetch("/calend_art/users/signin", {
@@ -80,11 +84,11 @@ const SignIn = () => {
   return (
     <Container>
       <Guest>
-        <div>Only Admins may add events</div>
+        <Text>Only the Admin may add events</Text>
         <button>Back to Home</button>
       </Guest>
       <Admin>
-        <div>Admin</div>
+        <Text>Admin Log In</Text>
         <Label>
           <Input
             type="text"
@@ -101,7 +105,7 @@ const SignIn = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Label>
-        <Button onClick={HandleClick}>sign in</Button>
+        <Button onClick={HandleClick}>Sign In</Button>
       </Admin>
     </Container>
   );
