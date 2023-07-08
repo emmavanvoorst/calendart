@@ -6,7 +6,7 @@ export const UserProvider = ({ children }) => {
 
     const [currentUser, setCurrentUser] = useState(() => {
 
-        let data = sessionStorage.getItem("user");
+        let data = sessionStorage.getItem("users");
         // Step 1: Grab data from storage
         
         // Step 2: Parse stored data

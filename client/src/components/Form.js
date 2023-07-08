@@ -10,12 +10,14 @@ import "react-time-picker/dist/TimePicker.css";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  font-family: "Roboto Mono", monospace;
+  
 `;
 const Label = styled.label`
   padding-bottom: 3em;
   color: white;
+  
 `;
 const Input = styled.input`
   border: none;
@@ -23,7 +25,6 @@ const Input = styled.input`
   margin-left: 1em;
   width: 15em;
   height: 2em;
-  font-family: "Roboto Mono", monospace;
   &:focus {
     border: none;
   }
@@ -38,14 +39,19 @@ const SubmitInput = styled.button`
   cursor: pointer;
   background-color: pink;
   padding: 1em 3em 1em 3em;
+  width: 10em;
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
   }
 `;
-
+const Flex= styled.div`
+  display: flex;
+`
+const InputTitle=styled.div`
+margin-left: 1em;
+`
 const Form = () => {
-  // const [value, onChange] = useState("10:00");
   const [formData, setFormData] = useState({
     title: "",
     name: "",
@@ -121,7 +127,7 @@ const Form = () => {
     <>
       <Container>
         <Label>
-          Event Title
+          <InputTitle>Event Title</InputTitle>
           <Input
             type="text"
             name="title"
@@ -132,8 +138,9 @@ const Form = () => {
             }
           />
         </Label>
+        <Flex>
         <Label>
-          Name of Location
+          <InputTitle>Name of Location</InputTitle>
           <Input
             type="text"
             name="name"
@@ -145,7 +152,7 @@ const Form = () => {
           />
         </Label>
         <Label>
-          Address
+          <InputTitle>Address</InputTitle>
           <Input
             type="text"
             name="address"
@@ -156,25 +163,26 @@ const Form = () => {
             }
           />
         </Label>
+        </Flex>
+        <Flex>
         <Label>
-          Start Date
+          <InputTitle>Start Date</InputTitle>
           <DatePicker
             selected={formData.startDate}
-            
-            // maxDate={new Date()}
             onChange={(date) => setFormData({ ...formData, startDate: date })}
           />
         </Label>
         <Label>
-          End Date
+          <InputTitle>End Date</InputTitle>
           <DatePicker
             selected={formData.endDate}
             minDate={new Date(formData.startDate)}
             onChange={(date) => setFormData({ ...formData, endDate: date })}
           />
         </Label>
+        </Flex>
         <Label>
-          Start Time
+          <InputTitle>Start Time</InputTitle>
           <input
             type="time"
             id="appt"
@@ -187,8 +195,9 @@ const Form = () => {
             }
           />
         </Label>
+        
         <Label>
-          Link to Event
+          <InputTitle>Link to Event</InputTitle>
           <Input
             type="text"
             name="website"
@@ -200,7 +209,7 @@ const Form = () => {
           />
         </Label>
         <Label>
-          Description
+          <InputTitle>Description</InputTitle>
           <DescInput
             type="text"
             name="desc"

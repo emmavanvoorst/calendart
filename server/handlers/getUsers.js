@@ -8,8 +8,8 @@ const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-// Function to retrieve all events from the database.
-const getAllEvents = async (req, res) => {
+// Function to retrieve users from the database.
+const getUsers = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
 
     await client.connect();
@@ -18,18 +18,18 @@ const getAllEvents = async (req, res) => {
     console.log("connected!");
 
   try {
-    const eventsCollection = db.collection("events");
+    const usersCollection = db.collection("users");
 
-    console.log("Retrieving events...");
+    console.log("Retrieving users...");
 
-    // Fetch all events from the collection
-    const events = await eventsCollection.find().toArray();
+    // Fetch all users from the collection
+    const users = await usersCollection.find().toArray();
 
-    // Send the events as a JSON response.
-    res.status(200).json({ status: 200, events });
+    // Send the users as a JSON response.
+    res.status(200).json({ status: 200, users });
     
   } catch (error) {
-    console.error("An error occurred while retrieving events:", error);
+    console.error("An error occurred while retrieving users:", error);
     res.status(500).json({ status: 500, message: "Internal server error" });
   }finally{
     client.close();
@@ -39,5 +39,4 @@ const getAllEvents = async (req, res) => {
     
   };
 
-module.exports = { getAllEvents };
-  
+module.exports = { getUsers };

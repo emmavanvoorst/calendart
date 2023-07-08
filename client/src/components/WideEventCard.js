@@ -13,7 +13,7 @@ const EventContainer = styled.div`
   align-items: center;
   flex-direction: column;
   height: 30em;
-  width: 30em;
+  width: 100%;
   border: white 3px solid;
   margin: 0 4em 4em 0;
   padding: 2em;
@@ -22,7 +22,7 @@ const EventContainer = styled.div`
 const Title = styled.div`
 font-size: 2rem;
 `
-const EventCard = () => {
+const WideEventCard = () => {
   const [events, setEvents] = useState([]);
   console.log({ events });
   useEffect(() => {
@@ -48,11 +48,13 @@ const EventCard = () => {
     };
   }, []);
 
+  const displayedEvents = events.slice(0, 3);
+
   return (
     <Wrapper>
       {events.length > 0 ? (
         events.map((event, index) => (
-          <EventContainer>
+          <EventContainer key={index}>
             <Title>{event.title}</Title>
             <div>{event.location.name}</div>
             <div>{event.location.address}</div>
@@ -72,4 +74,4 @@ const EventCard = () => {
   );
 };
 
-export default EventCard;
+export default WideEventCard;

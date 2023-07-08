@@ -7,6 +7,7 @@ const {addEvent} = require("./handlers/addevent")
 const {getAllEvents} = require("./handlers/getAllEvents")
 const {getOneEvent} = require("./handlers/getOneEvent")
 const {deleteEvent} = require("./handlers/deleteEvent")
+const {getUsers} = require("./handlers/getUsers")
 
 const PORT = 4000;
 
@@ -38,6 +39,8 @@ express()
   .get("/calend_art/events/read", getAllEvents)
 //get one event
   .get("/calend_art/events/:eventId", getOneEvent)
+//get users
+  .get("/calend_art/users/read", getUsers)
 //create an event
   .post("/calend_art/events/create", addEvent)
 //delete an event

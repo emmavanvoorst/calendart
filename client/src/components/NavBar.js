@@ -13,6 +13,7 @@ const Container =styled.div`
  height: 8em;
  background-color: darkseagreen;
  border-bottom: pink 4px solid;
+ 
 `
 const NavItem =styled.div`
  font-family: 'Roboto Mono', monospace;
@@ -34,6 +35,7 @@ const NavTitle =styled.div`
 `
 
 const NLink = styled(NavLink)`
+ font-family: 'Roboto Mono', monospace;
  text-decoration: none;
  color:white;
  transition: 500ms;
