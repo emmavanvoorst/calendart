@@ -24,7 +24,7 @@ const deleteEvent = async (request, response) => {
       console.log("Connected!");
   
       // Check if the event exists in events collection
-      const eventCheck = await db.collection("events").find();
+      const eventCheck = await db.collection("events").findOne({ _id: new ObjectId(eventId) });
       if (!eventCheck) {
         response.status(404).json({
           status: 404,

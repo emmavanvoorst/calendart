@@ -18,10 +18,23 @@ const EventContainer = styled.div`
   margin: 0 4em 4em 0;
   padding: 2em;
   font-family: 'Roboto Mono', monospace;
+  color: white;
 `;
+const Link = styled.a`
+text-decoration: none;
+color: green;
+
+`
 const Title = styled.div`
 font-size: 2rem;
 `
+const Loading =styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`
+
 const EventCard = () => {
   const [events, setEvents] = useState([]);
   console.log({ events });
@@ -60,13 +73,15 @@ const EventCard = () => {
             <div>Start: {moment(event.start_date).format("DD MMMM, yy")}</div>
             <div>End: {moment(event.end_date).format("DD MMMM, yy")}</div>
             <div>Description: {event.description}</div>
-            <div>Website: <a href={event.url}>{event.url}</a></div>
+            <div>Website: <Link href={event.url}>Go to {event.location.name}</Link></div>
             
             
           </EventContainer>
         ))
       ) : (
-        <div><SquircleLoader /></div>
+        <Loading>
+          <SquircleLoader />
+        </Loading>
       )}
     </Wrapper>
   );

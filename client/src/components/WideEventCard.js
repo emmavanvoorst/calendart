@@ -7,20 +7,31 @@ const Wrapper = styled.div`
   padding: 0 15em;
   display: flex;
   flex-wrap: wrap;
-`
+`;
 const EventContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 30em;
+  height: 25em;
   width: 100%;
   border: white 3px solid;
   margin: 0 4em 4em 0;
   padding: 2em;
-  font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
+  color: white;
 `;
 const Title = styled.div`
-font-size: 2rem;
+  font-size: 2rem;
+`;
+const Link = styled.a`
+  text-decoration: none;
+  color: green;
+`;
+const Loading =styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 `
 const WideEventCard = () => {
   const [events, setEvents] = useState([]);
@@ -52,23 +63,29 @@ const WideEventCard = () => {
 
   return (
     <Wrapper>
+      <Title>Events happening soon</Title>
       {events.length > 0 ? (
-        events.map((event, index) => (
+        displayedEvents.map((event, index) => (
           <EventContainer key={index}>
             <Title>{event.title}</Title>
             <div>{event.location.name}</div>
             <div>{event.location.address}</div>
-            <div>Start time: {!event.start_time ? <div>N/A</div>: event.start_time}</div>
+            <div>
+              Start time:{" "}
+              {!event.start_time ? <div>N/A</div> : event.start_time}
+            </div>
             <div>Start: {moment(event.start_date).format("DD MMMM, yy")}</div>
             <div>End: {moment(event.end_date).format("DD MMMM, yy")}</div>
             <div>Description: {event.description}</div>
-            <div>Website: <a href={event.url}>{event.url}</a></div>
-            
-            
+            <div>
+              Website: <Link href={event.url}>Go to {event.location.name}</Link>
+            </div>
           </EventContainer>
         ))
       ) : (
-        <div><SquircleLoader /></div>
+        <Loading>
+          <SquircleLoader />
+        </Loading>
       )}
     </Wrapper>
   );

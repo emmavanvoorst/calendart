@@ -1,73 +1,105 @@
-import { useState } from "react";
-import {styled} from "styled-components";
+import { useState, useContext } from "react";
+import { styled } from "styled-components";
 import moment from "moment";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { UserContext } from "./context/UserContext";
 
+const Container = styled.div`
+  z-index: 2001;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 8em;
+  background-color: darkseagreen;
+  border-bottom: pink 4px solid;
+`;
+const NavItem = styled.div`
+  font-size: 2rem;
+  color: white;
+  font-weight: bold;
+  margin-right: 2em;
+  cursor: pointer;
+`;
+const NavTitle = styled.div`
+  color: white;
+  font-weight: bold;
+  font-size: 4rem;
+  margin: 0.5em 4em 0 1em;
+  transition: 1000ms;
+  cursor: pointer;
+`;
 
-const Container =styled.div`
- display: flex;
- justify-content: space-between;
- align-items: center;
- position: fixed;
- width: 100%;
- height: 8em;
- background-color: darkseagreen;
- border-bottom: pink 4px solid;
- 
-`
-const NavItem =styled.div`
- font-family: 'Roboto Mono', monospace;
- font-size: 2rem;
- color: white;
- font-weight: bold;
- margin-right: 2em;
- cursor: pointer;
- 
-`
-const NavTitle =styled.div`
- color: white;
- font-family: 'Instrument Sans', sans-serif;
- font-weight: bold;
- font-size: 4rem;
- margin: 0.5em 4em 0 1em;
- transition: 1000ms;
- cursor: pointer;
+const Title = styled.p`
+font-family: "Instrument Sans", sans-serif;
 `
 
 const NLink = styled(NavLink)`
- font-family: 'Roboto Mono', monospace;
- text-decoration: none;
- color:white;
- transition: 500ms;
- &:hover{
-  color: pink;
- }
+  text-decoration: none;
+  color: white;
+  transition: 500ms;
+  &:hover {
+    color: pink;
+  }
+`;
+
+const Button = styled.button`
+  all:unset;
+  cursor:pointer;
+  border: white 2px solid;
+  padding: 1em 2em ;
+  color: white;
+  font-weight: bold;
+  &:hover{
+    background-color: white;
+    color: darkseagreen;
+  }
 `
 
-
 const NavBar = () => {
-    const [hover, setHover] = useState(false);
+  const navigate = useNavigate();
+  const [hover, setHover] = useState(false);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
+  const handleMouseEnter = () => {
+    setHover(true);
+  };
+  const handleMouseLeave = () => {
+    setHover(false);
+  };
 
-    const handleMouseEnter = () => {
-        setHover(true);   
-      };
-      const handleMouseLeave = () => {
-        setHover(false);
-      };
+  const handleSignout = () => {
+    setCurrentUser(null)
+    sessionStorage.setItem("users", null)
+    navigate("/")
+  }
 
-
-    return(
-        <Container>
-        <NavTitle 
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}> <NLink to="/">{hover === false ? <p>CALEND&apos;ART</p>: <p>{moment().format("DD/MM/YYYY")}</p>}</NLink></NavTitle> 
-        <NavItem><NLink to="/events">EVENTS</NLink></NavItem>
-        <NavItem><NLink to="/addevent">ADD EVENT</NLink></NavItem> 
-        </Container>
-    )
-}
-
-
+  return (
+    <Container>
+      
+      <NavTitle onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        {" "}
+        <NLink to="/">
+          {hover === false ? (
+            <Title>CALEND&apos;ART</Title>
+          ) : (
+            <Title>{moment().format("DD/MM/YYYY")}</Title>
+          )}
+        </NLink>
+      </NavTitle>
+      <NavItem>
+        <NLink to="/events">EVENTS</NLink>
+      </NavItem>
+      {currentUser ? (<NavItem>
+        <NLink to="/addevent">ADD EVENT</NLink>
+      </NavItem>): (<NavItem>
+        <NLink to="/signin">LOG IN</NLink>
+      </NavItem>)}
+      {currentUser &&
+      <Button onClick={handleSignout}>SIGN OUT</Button>}
+    </Container>
+  );
+};
 
 export default NavBar;

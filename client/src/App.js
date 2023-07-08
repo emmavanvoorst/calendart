@@ -9,7 +9,6 @@ import GlobalStyle from "./components/context/GlobalStyle";
 import { UserProvider } from "./components/context/UserContext";
 
 const Container = styled.div`
-  background-color: darkseagreen;
 `;
 
 function App() {
@@ -17,15 +16,13 @@ function App() {
     <Router>
       <UserProvider>
         <GlobalStyle />
-        <NavBar />
-        <Container>
+        <NavBar/>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/addevent" element={<AddEvent />} />
             <Route path="/events" element={<Events />} />
           </Routes>
-        </Container>
       </UserProvider>
     </Router>
   );

@@ -12,7 +12,7 @@ export default createGlobalStyle`
   input, button, select, option,
   h1, h2, h3, h4, h5, h6, p,
   text, textarea {
-    font-family: -apple-system, BlinkMacSystemFont, "Roboto Mono", monospace, "Segoe UI", 'Noto Sans', Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: -apple-system, BlinkMacSystemFont, "Roboto Mono", monospace, "Instrument Sans", sans-serif, "Segoe UI", 'Noto Sans', Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }
 
   html, body {

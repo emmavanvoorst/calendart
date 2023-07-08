@@ -14,9 +14,10 @@ const Container = styled.div`
   align-items: center;
   
 `;
-const Label = styled.label`
+const Label = styled.div`
+position: relative;
   padding-bottom: 3em;
-  color: white;
+  color: black;
   
 `;
 const Input = styled.input`
@@ -48,8 +49,18 @@ const SubmitInput = styled.button`
 const Flex= styled.div`
   display: flex;
 `
-const InputTitle=styled.div`
-margin-left: 1em;
+const InputTitle=styled.label`
+position:absolute;
+left: 12%;
+top: 10px;
+transition: all 0.5s ease;
+pointer-events: none;
+&:focus{
+  display:block;
+  color: black;
+  top: -20px;
+  font-size: 14px;
+}
 `
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -140,16 +151,16 @@ const Form = () => {
         </Label>
         <Flex>
         <Label>
-          <InputTitle>Name of Location</InputTitle>
+          
           <Input
             type="text"
             name="name"
-            placeholder="Name of Venue"
+            placeholder
             value={formData.name}
             onChange={(event) =>
               setFormData({ ...formData, name: event.target.value })
             }
-          />
+          ></Input><InputTitle>Name of Location</InputTitle>
         </Label>
         <Label>
           <InputTitle>Address</InputTitle>
