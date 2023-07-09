@@ -23,7 +23,9 @@ const EventContainer = styled.div`
 const Link = styled.a`
 text-decoration: none;
 color: green;
-
+&:hover{
+  color:pink;
+}
 `
 const Title = styled.div`
 font-size: 2rem;

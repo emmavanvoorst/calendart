@@ -8,7 +8,7 @@ const Container = styled.div`
   align-self: center;
   padding-top: 10em;
   width: 100vw;
-  height: 100vh;
+  
 `;
 
 const Events = () => {

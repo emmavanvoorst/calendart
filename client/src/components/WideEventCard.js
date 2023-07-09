@@ -26,6 +26,9 @@ const Title = styled.div`
 const Link = styled.a`
   text-decoration: none;
   color: green;
+  &:hover{
+  color:pink;
+}
 `;
 const Loading =styled.div`
   display: flex;

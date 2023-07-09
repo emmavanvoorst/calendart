@@ -7,6 +7,7 @@ import AddEvent from "./AddEventPage";
 import Events from "./AllEventsPage";
 import GlobalStyle from "./components/context/GlobalStyle";
 import { UserProvider } from "./components/context/UserContext";
+import AboutPage from "./AboutPage";
 
 const Container = styled.div`
 `;
@@ -22,6 +23,7 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/addevent" element={<AddEvent />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/about" element={<AboutPage/>}/>
           </Routes>
       </UserProvider>
     </Router>

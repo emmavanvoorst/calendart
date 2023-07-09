@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 import moment from "moment";
 import heroimg from "../imgs/heroimg.png";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const Container = styled.div`
   position: relative;
@@ -14,6 +16,7 @@ const Flex = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  
 `;
 const Image = styled.img`
   width: 100%;
@@ -24,6 +27,14 @@ const Text = styled.div`
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.5);
   padding: 8em 4em;
+  transition: 500ms;
+  &:hover{
+    transform: scale(1.3); 
+    cursor: pointer;
+  }
+  @media screen and (max-width:700px){
+    
+  }
 `;
 const Title = styled.div`
   margin-bottom: 1em;
@@ -39,17 +50,42 @@ const Date = styled.div`
   transform: translate(-50%, -50%); */
 `;
 
+const NLink = styled(NavLink)`
+  text-decoration: none;
+  color: black;
+  transition: 200ms;
+  &:hover {
+    color: rgba(0, 54, 132);
+  }
+`;
+
 const Hero = () => {
+ const [hover, setHover] = useState(false)
+
+  const onMouseEnter= () =>{
+      setHover(true)
+  }
+  const onMouseLeave= () =>{
+    setHover(false)
+}
+
+
   return (
     <Container>
       <Image src={heroimg} />
-      <Flex>
+      <Flex onMouseOver={onMouseEnter} onMouseLeave={onMouseLeave}>
+      { hover !== true? 
         <Text>
           <Title>Calend'Art</Title>
           <Desc>Find local Montreal art events</Desc>
-          {/* <Date>Today is {moment().format("dddd, MMMM, yyy")}</Date> */}
-        </Text>
-      </Flex>
+        </Text>:
+        <NLink to="/about">
+          <Text>
+          <Title>Find out more<br/> about Calend'Art</Title>
+        </Text></NLink>
+     }
+      </Flex> 
+        
     </Container>
   );
 };
