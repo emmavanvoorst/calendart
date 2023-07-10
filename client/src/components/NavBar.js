@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
-import { styled } from "styled-components";
+import { styled, css } from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
 
-import {RxHamburgerMenu} from 'react-icons/rx';
+import { RxHamburgerMenu } from "react-icons/rx";
 import moment from "moment";
 
 const Container = styled.div`
@@ -23,6 +23,9 @@ const NavItem = styled.div`
   font-weight: bold;
   margin-right: 2em;
   cursor: pointer;
+  @media screen and (max-width: 1400px) {
+    font-size: 1.4rem;
+  }
 `;
 const NavTitle = styled.div`
   color: white;
@@ -31,14 +34,14 @@ const NavTitle = styled.div`
   margin: 0.5em 4em 0 1em;
   transition: 200ms;
   cursor: pointer;
-  @media screen and (max-width: 700px){
-    font-size: 2rem;
+  @media screen and (max-width: 1400px) {
+    font-size: 2.3rem;
   }
 `;
 
 const Title = styled.p`
-font-family: "Instrument Sans", sans-serif;
-`
+  font-family: "Instrument Sans", sans-serif;
+`;
 
 const NLink = styled(NavLink)`
   text-decoration: none;
@@ -50,35 +53,105 @@ const NLink = styled(NavLink)`
 `;
 
 const Button = styled.button`
-  all:unset;
-  cursor:pointer;
+  all: unset;
+  cursor: pointer;
   border: white 2px solid;
-  padding: 1em 2em ;
+  padding: 1em 2em;
   color: white;
   font-weight: bold;
-  &:hover{
+  
+  &:hover {
     background-color: white;
     color: darkseagreen;
   }
-`
+
+`;
 
 const HamburgerMenu = styled.div`
-display: flex;
-flex-direction: row;
-@media screen and (max-width: 700px){
+  display: flex;
+  flex-direction: row;
+  @media screen and (max-width: 830px) {
     display: none;
   }
-`
+`;
 const HamIcon = styled.div`
-@media screen and (min-width: 700px){
+  cursor: pointer;
+  position: absolute;
+  @media screen and (max-width: 830px) {
+    display: flex;
+  }
+`;
+
+const DropMenu = styled.div`
+  position: absolute;
+  top: 4.3em;
+  right: 0;
+  padding: 1em 1em 1.5em 2.5em;
+  background-color: darkseagreen;
+  border: pink solid 4px;
+  border-top: none;
+  line-height: 4em;
+`;
+const HamAni = styled.div`
+  cursor: pointer;
+  @media screen and (min-width: 800px) {
     display: none;
   }
-`
+`;
+const StyledSpan = styled.span`
+  position: relative;
+  display: flex;
+  margin-left: 80vw;
+  height: 2px;
+  width: 3em;
+  background: white;
+  border-radius: 2px;
+  transition: transform 0.2s ease-in-out;
 
-const NavBar = () => {
+  &:nth-child(1) {
+    top: 0;
+    ${({ open }) =>
+      open &&
+      css`
+        width: 0;
+        left: 50%;
+      `}
+  }
+
+  &:nth-child(2) {
+    top: 8px;
+    ${({ open }) =>
+      open &&
+      css`
+        transform: rotate(45deg);
+      `}
+  }
+  &:nth-child(3) {
+    top: 6px;
+    ${({ open }) =>
+      open &&
+      css`
+        transform: rotate(-45deg);
+      `}
+  }
+
+  &:nth-child(4) {
+    top: 16px;
+    ${({ open }) =>
+      open &&
+      css`
+        top: 8px;
+        width: 0;
+        left: 50%;
+      `}
+  }
+`;
+
+const NavBar = ({ currentUser, handleSignout }) => {
   const navigate = useNavigate();
   const [hover, setHover] = useState(false);
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const [active, setActive] = useState(false);
+  // const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const handleMouseEnter = () => {
     setHover(true);
@@ -87,15 +160,22 @@ const NavBar = () => {
     setHover(false);
   };
 
-  const handleSignout = () => {
-    setCurrentUser(null)
-    sessionStorage.setItem("users", null)
-    navigate("/")
-  }
+  // const handleSignout = () => {
+  //   setCurrentUser(null);
+  //   sessionStorage.setItem("users", null);
+  //   navigate("/");
+  // };
+
+  const handleClick = () => {
+    setActive((prevState) => !prevState);
+    // setActive(true);
+    // if (active === true) {
+    //   setActive(false);
+    // }
+  };
 
   return (
     <Container>
-      
       <NavTitle onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         {" "}
         <NLink to="/">
@@ -107,18 +187,53 @@ const NavBar = () => {
         </NLink>
       </NavTitle>
       <HamburgerMenu>
-      <NavItem>
-        <NLink to="/events">EVENTS</NLink>
-      </NavItem>
-      {currentUser ? (<NavItem>
-        <NLink to="/addevent">ADD EVENT</NLink>
-      </NavItem>): (<NavItem>
-        <NLink to="/signin">LOG IN</NLink>
-      </NavItem>)}
-      {currentUser &&
-      <Button onClick={handleSignout}>SIGN OUT</Button>}
+        <NavItem>
+          <NLink to="/events">EVENTS</NLink>
+        </NavItem>
+        <NavItem>
+          <NLink to="/about">ABOUT US</NLink>
+        </NavItem>
+        {currentUser ? (
+          <NavItem>
+            <NLink to="/addevent">ADD EVENT</NLink>
+          </NavItem>
+        ) : (
+          <NavItem>
+            <NLink to="/signin">LOG IN</NLink>
+          </NavItem>
+        )}
+        {currentUser && <Button onClick={handleSignout}>SIGN OUT</Button>}
       </HamburgerMenu>
-      <HamIcon><RxHamburgerMenu size={40} color="white"/></HamIcon>
+
+      <HamIcon>
+        <HamAni>
+          <div id="nav-icon3" onClick={handleClick}>
+            <StyledSpan open={active} />
+            <StyledSpan open={active} />
+            <StyledSpan open={active} />
+            <StyledSpan open={active} />
+          </div>
+        </HamAni>
+        {active === false ? null : (
+          <DropMenu>
+            <NavItem>
+              <NLink to="/events">EVENTS</NLink>
+            </NavItem>
+            <NavItem>
+              <NLink to="/about">ABOUT US</NLink>
+            </NavItem>
+            {currentUser ? (
+              <NavItem>
+                <NLink to="/addevent">ADD EVENT</NLink>
+              </NavItem>
+            ) : (
+              <NavItem>
+                <NLink to="/signin">LOG IN</NLink>
+              </NavItem>
+            )}
+          </DropMenu>
+        )}
+      </HamIcon>
     </Container>
   );
 };

@@ -32,13 +32,16 @@ const Text = styled.div`
     transform: scale(1.3); 
     cursor: pointer;
   }
-  @media screen and (max-width:700px){
-    
+  @media screen and (max-width: 500px) {
+    padding: 0.2em 1em;
   }
 `;
 const Title = styled.div`
   margin-bottom: 1em;
   font-size: 2rem;
+  @media screen and (max-width: 500px) {
+    font-size: 1rem;
+  }
 `;
 const Desc = styled.div`
   margin-bottom: 2em;

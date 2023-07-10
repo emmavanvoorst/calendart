@@ -1,4 +1,4 @@
-const {MongoClient} = require("mongodb");
+const {MongoClient, ObjectId} = require("mongodb");
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -24,18 +24,18 @@ const deleteEvent = async (request, response) => {
       console.log("Connected!");
   
       // Check if the event exists in events collection
-      const eventCheck = await db.collection("events").findOne({ _id: new ObjectId(eventId) });
+      const eventCheck = await db.collection("events").findOne({_id: new ObjectId(eventId) });
+
       if (!eventCheck) {
         response.status(404).json({
           status: 404,
           message: "Event not found.",
         });
-        client.close();
         return;
       }
   
       // Delete the event from the cart
-      await db.collection("events").deleteOne({ _id: new ObjectId(eventId) });
+      await db.collection("events").deleteOne({_id: new ObjectId(eventId) });
   
       response.status(200).json({
         status: 200,

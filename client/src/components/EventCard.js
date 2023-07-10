@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { UserContext } from "./context/UserContext";
+
 import { styled } from "styled-components";
 import { SquircleLoader } from "react-awesome-loaders";
+import {MdOutlineDelete} from 'react-icons/md';
 import moment from "moment";
 
 const Wrapper = styled.div`
@@ -36,27 +39,17 @@ const Loading =styled.div`
   align-items: center;
   height: 100vh;
 `
-const Delete= styled.button`
+const Delete= styled(MdOutlineDelete)`
+  cursor: pointer;
 `
 const EventCard = () => {
   const [events, setEvents] = useState([]);
+  const [deletedEvent, setDeletedEvent] = useState(null);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
 
-  // const HandleClick = () => {
-  //   fetch("calendar/events/delete/:eventId", {
-  //     method: "DELETE",
 
-  //     body: JSON.stringify({
-  //       username,
-  //       password,
-  //     }),
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-
-  useEffect(() => {
+  useEffect((events) => {
     let mounted = true;
     console.log({ events });
     fetch(`/calend_art/events/read`)
@@ -79,13 +72,31 @@ const EventCard = () => {
     };
   }, []);
 
+  const handleDeleteEvent = (eventId) => {
+    fetch(`/calend_art/events/delete/${eventId}`, {
+      method: "DELETE",
+    })
+      .then((response) => response.json())
+      .then((parse) => {
+        if (parse.status === 200) {
+          setEvents((prevEvents) => prevEvents.filter((event) => event._id !== eventId));
+          // setDeletedEvent(eventId);
+        } else {
+          console.log(parse.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
+  const filteredEvents = events.filter((event) => event._id !== deletedEvent);
 
   return (
     <Wrapper>
-      {events.length > 0 ? (
-        events.map((event, index) => (
-          <EventContainer>
+       {filteredEvents.length > 0 ? (
+        filteredEvents.map((event, index) => (
+          <EventContainer key={index}>
             <Title>{event.title}</Title>
             <div>{event.location.name}</div>
             <div>{event.location.address}</div>
@@ -95,7 +106,8 @@ const EventCard = () => {
             <div>Description: {event.description}</div>
             <div>Website: <Link href={event.url}>Go to {event.location.name}</Link></div>
             
-            <Delete>Delete</Delete>
+            {currentUser &&
+            <Delete size={25} onClick={() => handleDeleteEvent(event._id)}/>}
           </EventContainer>
         ))
       ) : (

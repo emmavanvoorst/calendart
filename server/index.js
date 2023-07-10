@@ -47,7 +47,7 @@ express()
 //Login
   .post("/calend_art/users/signin", SignIn)
 //delete an event
-  .delete("calendar/events/delete/:eventId", deleteEvent)
+  .delete("/calend_art/events/delete/:eventId", deleteEvent)
 
 
 .use((req, res) => res.status(404).type("txt").send("🤷‍♂️"))
