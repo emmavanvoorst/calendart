@@ -53,6 +53,49 @@ const Link = styled.a`
   color:pink;
 }
 `;
+const Button = styled.button`
+/* margin-top: 2em; */
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 1rem;
+  letter-spacing: .15rem;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: white solid 1px;
+    background-color: none;
+    z-index: -2;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: white;
+    transition: all .3s;
+    z-index: -1;
+  }
+  &:hover {
+    color: darkseagreen;
+    font-weight: bold;
+    &:before {
+      width: 100%;
+    }
+  }
+`
 const Loading =styled.div`
   display: flex;
   justify-content: center;
@@ -103,9 +146,9 @@ const WideEventCard = () => {
             <div>Start: {moment(event.start_date).format("DD MMMM, yy")}</div>
             <div>End: {moment(event.end_date).format("DD MMMM, yy")}</div>
             <Description>Description: {event.description}</Description>
-            <div>
-              Website: <Link href={event.url}>Go to {event.location.name}</Link>
-            </div>
+            <Button as="a" href={event.url}>
+              Go to {event.location.name}
+            </Button>
           </EventContainer>
         ))
       ) : (

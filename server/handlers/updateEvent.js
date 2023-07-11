@@ -24,7 +24,7 @@ const updateEvent = async (request, response) => {
       endDate,
       startTime,
       eventLink,
-      desc,
+      description,
     } = request.body;
   
     try {
@@ -45,7 +45,7 @@ const updateEvent = async (request, response) => {
           endDate,
           startTime,
           eventLink,
-          desc,
+          description,
           start_date: new Date(startDate),
           end_date: new Date(endDate),
         },
@@ -56,13 +56,18 @@ const updateEvent = async (request, response) => {
         .collection("events")
         .updateOne(filter, update, options);
         console.log(result)
-      if (!result.value) {
+      if (!result.matchedCount) {
         // Handle case where the event was not found
         return response.status(404).json({ message: "Event not found" });
       }
+      if (!result.modifiedCount) {
+        // Handle case where the event was not found
+        return response.status(502).json({ message: "Event not updated" });
+      }
    
-      response.status(200).json({ status: 200, data: result.value });
+      response.status(200).json({ status: 200, message: "successfully updated" });
     } catch (error) {
+      console.log(error)
       response.status(500).json({ status: 500, message: error.message });
     } finally {
       client.close();

@@ -1,7 +1,6 @@
 import {styled} from "styled-components";
 
-import Form from "./components/Form";
-import LongEventCard from "./components/LongEventCard";
+import EditEventCard from "./components/EditEventCard";
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +15,7 @@ const Container = styled.div`
 const EditEventPage = () => {
 return(
 <Container>
-<LongEventCard/>
+<EditEventCard/>
 </Container>
 )
 }

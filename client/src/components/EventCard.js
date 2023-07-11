@@ -9,37 +9,44 @@ import {FiEdit3} from 'react-icons/fi'
 import moment from "moment";
 
 const Wrapper = styled.div`
-  /* padding: 0 15em; */
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  
 `
 const EventContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: left;
   flex-direction: column;
-  height: 30em;
-  width: 33vw;
+  height: 55em;
+  width: 40vw;
   border: white 3px solid;
   margin: 0 4em 4em 0;
-  padding: 2em;
+  padding: 5em;
   font-family: 'Roboto Mono', monospace;
   color: white;
   @media screen and (max-width: 1400px){
-    width: 100%;
-    padding:0;
+    width: 35vw;
+    padding:2em;
     font-size: 0.8rem;
-    height: 37em;
+    height: 55em;
   }
 `;
 const Link = styled.a`
-text-decoration: none;
+/* text-decoration: none;
 color: green;
 &:hover{
   color:pink;
-}
+} */
 `
 const Title = styled.div`
 font-size: 2rem;
+margin-bottom: 1em;
+`
+const Flex = styled.div`
+display: flex;
+`
+const Text =styled.div`
+margin-bottom: 1em;
 `
 const Loading =styled.div`
   display: flex;
@@ -49,15 +56,61 @@ const Loading =styled.div`
 `
 const IconContainer =styled.div`
 display: flex;
-margin-top: 2em;
+margin: 1em  0 0 1em;
 `
 const Delete= styled(MdOutlineDelete)`
   cursor: pointer;
+  margin-left: 0.5em;
 `
 const Edit = styled(FiEdit3)`
 cursor: pointer;
 color: white;
 `
+
+const Button = styled.button`
+margin-top: 5em;
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 1rem;
+  letter-spacing: .15rem;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: white solid 1px;
+    background-color: none;
+    z-index: -2;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: white;
+    transition: all .3s;
+    z-index: -1;
+  }
+  &:hover {
+    color: darkseagreen;
+    font-weight: bold;
+    &:before {
+      width: 100%;
+    }
+  }
+`
+
 const EventCard = () => {
   const [events, setEvents] = useState([]);
   const [deletedEvent, setDeletedEvent] = useState(null);
@@ -97,7 +150,6 @@ const EventCard = () => {
       .then((parse) => {
         if (parse.status === 200) {
           setEvents((prevEvents) => prevEvents.filter((event) => event._id !== eventId));
-          // setDeletedEvent(eventId);
         } else {
           console.log(parse.message);
         }
@@ -111,24 +163,29 @@ const EventCard = () => {
 
   return (
     <Wrapper>
+      <div>
        {filteredEvents.length > 0 ? (
         filteredEvents.map((event, index) => (
           <EventContainer key={index}>
+            <Flex>
             <Title>{event.title}</Title>
-            <div>{event.location.name}</div>
-            <div>{event.location.address}</div>
-            <div>Start time: {!event.start_time ? <div>N/A</div>: event.start_time}</div>
-            <div>Start: {moment(event.start_date).format("DD MMMM, yy")}</div>
-            <div>End: {moment(event.end_date).format("DD MMMM, yy")}</div>
-            <div>Description: {event.description}</div>
-            <div>Website: <Link href={event.url}>Go to {event.location.name}</Link></div>
-            
             {currentUser &&
             <IconContainer>
             <NavLink to ={`/edit/${event._id}`}><Edit size={25}/></NavLink>
             <Delete size={25} onClick={() => handleDeleteEvent(event._id)}/>
             </IconContainer>
-            }
+            }</Flex>
+            <Text>{event.location.name}</Text>
+            <Text>{event.location.address}</Text>
+            <Text>Start time: {!event.start_time ? <Text>N/A</Text>: event.start_time}</Text>
+            <Text>Start: {moment(event.start_date).format("DD MMMM, yy")}</Text>
+            <Text>End: {moment(event.end_date).format("DD MMMM, yy")}</Text>
+            <Text>Description: {event.description}</Text>
+            <Button as="a" href={event.url}>
+              Go to {event.location.name}
+            </Button>
+            
+            
           </EventContainer>
         ))
       ) : (
@@ -136,6 +193,7 @@ const EventCard = () => {
           <SquircleLoader />
         </Loading>
       )}
+      </div>
     </Wrapper>
   );
 };

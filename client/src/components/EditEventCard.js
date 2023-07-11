@@ -4,34 +4,51 @@ import { useParams } from "react-router-dom";
 import { styled } from "styled-components";
 import DatePicker from "react-datepicker";
 import { SquircleLoader } from "react-awesome-loaders";
-import moment from "moment";
 
 const Wrapper = styled.div`
   padding: 0 15em;
   display: flex;
   flex-wrap: wrap;
 `;
+const PageTitle = styled.div`
+  background-color: white;
+  color: darkseagreen;
+  width: 15vw;
+  height: 4vh;
+  font-size: 1.5rem;
+`
 const EventContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 45em;
-  width: 35em;
+  height: 55em;
+  width: 50vw;
   border: white 3px solid;
   margin: 0 4em 4em 0;
   padding: 2em;
   font-family: "Roboto Mono", monospace;
-  color: white;
 `;
-const Label = styled.div``;
+const InputContainer = styled.div`
+`
+const Label = styled.div`
+color: white;
+margin: 1.5em 0;
+`;
+const TitleLabel= styled.div`
+color: white;
+`;
 const InputTitle = styled.div``;
-const DescInput = styled.textarea``;
+const DescInput = styled.textarea`
+width: 100%;
+`;
 const TitleInput = styled.input`
   all: unset;
   font-size: 2em;
   color: white;
-  width: 15em;
+  width: 100%;
   height: 3em;
+  border: white solid 2px;
+  padding-left: 0.5em;
   &::placeholder {
     color: white;
   }
@@ -42,9 +59,10 @@ const TitleInput = styled.input`
 const Input = styled.input`
   all: unset;
   font-size: 1em;
-  color: white;
   height: 2em;
-  margin-bottom: 1.5em;
+  width: 100%;
+  border: white solid 2px;
+  padding-left: 0.5em;
   &::placeholder {
     color: white;
   }
@@ -54,15 +72,23 @@ const Input = styled.input`
 `;
 
 const Title = styled.div`
-  font-size: 2rem;
+  font-size: 0.8rem;
 `;
 
-const Website = styled.div``;
-const Link = styled.a`
-  text-decoration: none;
-  color: green;
-  &:hover {
-    color: pink;
+const Website = styled.div`
+`;
+const Button = styled.button`
+  all: unset;
+  cursor: pointer;
+  color: white;
+  border: white 2px solid;
+  width: 10em;
+  height: 3em;
+  text-align: center;
+  font-weight: bold;
+  &:hover{
+    color: darkseagreen;
+    background-color: white;
   }
 `;
 const Loading = styled.div`
@@ -72,11 +98,11 @@ const Loading = styled.div`
   height: 100vh;
 `;
 
-const LongEventCard = () => {
+const EditEventCard = () => {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
   const [formData, setFormData] = useState({});
-
+console.log(formData)
   console.log({ event });
   useEffect(() => {
     let mounted = true;
@@ -101,16 +127,22 @@ const LongEventCard = () => {
     };
   }, [eventId]);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-   
-    });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (
+      !formData.title ||
+      !formData.name ||
+      !formData.address ||
+      !formData.startDate ||
+      !formData.endDate ||
+      !formData.startTime ||
+      !formData.eventLink ||
+      !formData.desc
+    ) {
+      window.alert("Please fill in all the fields");
+      return;
+    }
 
     fetch(`/calend_art/events/update/${eventId}`, {
       method: "PUT",
@@ -134,100 +166,117 @@ const LongEventCard = () => {
 
   return (
     <Wrapper>
+      <PageTitle>Edit Event</PageTitle>
       {event ? (
         <EventContainer>
-          <Label>
+          
+          <InputContainer>
+          <TitleLabel>
+            <Title>Event Title</Title>
             <TitleInput
               type="text"
               name="title"
+              required
               placeholder={event.title}
               value={formData.title || ""}
-              onChange={handleChange}
+              onChange={(event) =>
+                setFormData({ ...formData, title: event.target.value })
+              }
             />
-          </Label>
+          </TitleLabel>
           <Label>
+            <Title>Name of location</Title>
             <Input
               type="text"
               name="name"
+              required
               placeholder={event.location.name}
               value={formData.name || ""}
-              onChange={handleChange}
+              onChange={(event) =>
+                setFormData({ ...formData, name: event.target.value })
+              }
             />
           </Label>
           <Label>
+            <Title>Address</Title>
             <Input
               type="text"
               name="address"
+              required
               placeholder={event.location.address}
-              value={formData.address || ""}
-              onChange={handleChange}
+              value={formData.address}
+              onChange={(event) =>
+                setFormData({ ...formData, address: event.target.value })
+              }
             />
           </Label>
-          {/* <Label>
-            <Input
-              type="text"
-              name="start_time"
-              placeholder={`Start time: ${
-                !event.start_time ? "N/A" : event.start_time
-              }`}
-              value={formData.start_time || ""}
-              onChange={handleChange}
-            />
-          </Label>
+          <Website>
+            <Label>
+            <Title>Event url</Title>
+              <Input
+                type="text"
+                name="website"
+                placeholder= {event.url}
+                value={formData.eventLink || ""}
+                onChange={(event) =>
+                  setFormData({ ...formData, eventLink: event.target.value })
+                }
+              />
+            </Label>
+            
+          </Website>
           <Label>
+          <InputTitle>Start Time</InputTitle>
+          <input
+            type="time"
+            required
+            id="appt"
+            name="appt"
+            min="09:00"
+            max="18:00"
+            value={formData.time}
+            onChange={(time) =>
+              setFormData({ ...formData, startTime: time.target.value })
+            }
+          />
+        </Label>
+          <Label>
+            <Title>Start Date</Title>
           <DatePicker
-            selected={formData.endDate}
+            selected={formData.startDate}
             minDate={new Date(formData.startDate)}
-            //   placeholder={`Start: ${moment(event.start_date).format(
-            //     "DD MMMM, yy"
-            //   )}`}
               name="startDate"
-              value={formData.start_date || ""}
-              onChange={handleChange}
-            />
-          </Label> */}
-          {/* <Label>
+              onChange={(date) => setFormData({ ...formData, startDate: date })}
+              />
+          </Label>
+          <Label>
+          <Title>End Date</Title>
           <DatePicker
             selected={formData.endDate}
             minDate={new Date(formData.startDate)}
-              placeholder={`End: ${moment(event.end_date).format(
-                "DD MMMM, yy"
-              )}`}
-              value={formData.end_date || ""}
-              onChange={handleChange}
+              onChange={(date) => setFormData({ ...formData, endDate: date })}
+              
             />
-          </Label> */}
+          </Label>
           <Label>
-            <InputTitle>Description</InputTitle>
+            <Title>Description</Title>
             <DescInput
               type="text"
               name="description"
-              rows="4"
+              required
+              rows="7"
               cols="35"
               placeholder={event.description}
-              value={formData.description || ""}
-              onChange={handleChange}
+              value={formData.description}
+              onChange={(event) =>
+                setFormData({ ...formData, description: event.target.value })
+              }
             />
           </Label>
 
-          <Website>
-            <Label>
-              <Input
-                type="text"
-                name="url"
-                placeholder={
-                    <span>
-                      Go to{" "}
-                      <Link href={event.url}>{event.location.name}</Link>
-                    </span>
-                  }
-                value={formData.url || ""}
-                onChange={handleChange}
-              />
-            </Label>
-            Website: Go to {event.location.name}
-          </Website>
-          <button type="submit" onClick={handleSubmit}>Save Changes</button>
+          
+          <Button type="submit" onClick={handleSubmit}>Save Changes</Button>
+          </InputContainer>
         </EventContainer>
       ) : (
         <Loading>
@@ -238,4 +287,4 @@ const LongEventCard = () => {
   );
 };
 
-export default LongEventCard;
+export default EditEventCard;
