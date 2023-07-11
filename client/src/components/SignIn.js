@@ -43,7 +43,9 @@ margin-bottom: 2em;
 const Input = styled.input`
 margin-bottom: 0.5em;
 `;
-const Button = styled.button``;
+const Button = styled.button`
+
+`;
 
 const SignIn = () => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -80,12 +82,16 @@ const SignIn = () => {
         console.error(error);
       });
   };
+  
+  const navClick = ()=>{
+    navigate("/")
+  }
 
   return (
     <Container>
       <Guest>
         <Text>Only the Admin may add events</Text>
-        <button>Back to Home</button>
+        <button onClick={navClick}>Back to Home</button>
       </Guest>
       <Admin>
         <Text>Admin Log In</Text>

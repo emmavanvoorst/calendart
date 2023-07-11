@@ -22,7 +22,7 @@ const SignIn = async (request, response) => {
   const {username, password} = request.body;
 
   if(password !== PASSWORD){
-    response.status(404).json({ status: 404, message: "Not Found" })
+    return response.status(404).json({ status: 404, message: "Not Found" })
   }
 
   try {

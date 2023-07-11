@@ -9,6 +9,7 @@ const {getOneEvent} = require("./handlers/getOneEvent")
 const {deleteEvent} = require("./handlers/deleteEvent")
 const {getUsers} = require("./handlers/getUsers")
 const {SignIn} = require("./handlers/SignIn")
+const {updateEvent} = require("./handlers/updateEvent")
 
 const PORT = 4000;
 
@@ -48,6 +49,8 @@ express()
   .post("/calend_art/users/signin", SignIn)
 //delete an event
   .delete("/calend_art/events/delete/:eventId", deleteEvent)
+//update an event
+  .put("/calend_art/events/update/:eventId", updateEvent)
 
 
 .use((req, res) => res.status(404).type("txt").send("🤷‍♂️"))

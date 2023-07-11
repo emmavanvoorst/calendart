@@ -1,9 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "./context/UserContext";
+import { NavLink } from "react-router-dom";
 
 import { styled } from "styled-components";
 import { SquircleLoader } from "react-awesome-loaders";
 import {MdOutlineDelete} from 'react-icons/md';
+import {FiEdit3} from 'react-icons/fi'
 import moment from "moment";
 
 const Wrapper = styled.div`
@@ -16,12 +18,18 @@ const EventContainer = styled.div`
   align-items: center;
   flex-direction: column;
   height: 30em;
-  width: 30em;
+  width: 33vw;
   border: white 3px solid;
   margin: 0 4em 4em 0;
   padding: 2em;
   font-family: 'Roboto Mono', monospace;
   color: white;
+  @media screen and (max-width: 1400px){
+    width: 100%;
+    padding:0;
+    font-size: 0.8rem;
+    height: 37em;
+  }
 `;
 const Link = styled.a`
 text-decoration: none;
@@ -39,8 +47,16 @@ const Loading =styled.div`
   align-items: center;
   height: 100vh;
 `
+const IconContainer =styled.div`
+display: flex;
+margin-top: 2em;
+`
 const Delete= styled(MdOutlineDelete)`
   cursor: pointer;
+`
+const Edit = styled(FiEdit3)`
+cursor: pointer;
+color: white;
 `
 const EventCard = () => {
   const [events, setEvents] = useState([]);
@@ -73,6 +89,7 @@ const EventCard = () => {
   }, []);
 
   const handleDeleteEvent = (eventId) => {
+
     fetch(`/calend_art/events/delete/${eventId}`, {
       method: "DELETE",
     })
@@ -107,7 +124,11 @@ const EventCard = () => {
             <div>Website: <Link href={event.url}>Go to {event.location.name}</Link></div>
             
             {currentUser &&
-            <Delete size={25} onClick={() => handleDeleteEvent(event._id)}/>}
+            <IconContainer>
+            <NavLink to ={`/edit/${event._id}`}><Edit size={25}/></NavLink>
+            <Delete size={25} onClick={() => handleDeleteEvent(event._id)}/>
+            </IconContainer>
+            }
           </EventContainer>
         ))
       ) : (

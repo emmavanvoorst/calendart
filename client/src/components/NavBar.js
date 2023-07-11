@@ -16,6 +16,9 @@ const Container = styled.div`
   height: 8em;
   background-color: darkseagreen;
   border-bottom: pink 4px solid;
+  @media screen and (max-width: 800px) {
+    height: 6em;
+  }
 `;
 const NavItem = styled.div`
   font-size: 2rem;
@@ -59,12 +62,15 @@ const Button = styled.button`
   padding: 1em 2em;
   color: white;
   font-weight: bold;
-  
+  margin-right: 1.5em;
   &:hover {
     background-color: white;
     color: darkseagreen;
   }
-
+  @media screen and (max-width: 830px) {
+   padding: 0.05em 1.5em;
+   margin-top: 0.5em;
+  }
 `;
 
 const HamburgerMenu = styled.div`
@@ -84,7 +90,7 @@ const HamIcon = styled.div`
 
 const DropMenu = styled.div`
   position: absolute;
-  top: 4.3em;
+  top: 3.4em;
   right: 0;
   padding: 1em 1em 1.5em 2.5em;
   background-color: darkseagreen;
@@ -147,11 +153,11 @@ const StyledSpan = styled.span`
   }
 `;
 
-const NavBar = ({ currentUser, handleSignout }) => {
+const NavBar = () => {
   const navigate = useNavigate();
   const [hover, setHover] = useState(false);
   const [active, setActive] = useState(false);
-  // const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const handleMouseEnter = () => {
     setHover(true);
@@ -160,11 +166,11 @@ const NavBar = ({ currentUser, handleSignout }) => {
     setHover(false);
   };
 
-  // const handleSignout = () => {
-  //   setCurrentUser(null);
-  //   sessionStorage.setItem("users", null);
-  //   navigate("/");
-  // };
+  const handleSignout = () => {
+    setCurrentUser(null);
+    sessionStorage.setItem("users", null);
+    navigate("/");
+  };
 
   const handleClick = () => {
     setActive((prevState) => !prevState);
@@ -231,6 +237,7 @@ const NavBar = ({ currentUser, handleSignout }) => {
                 <NLink to="/signin">LOG IN</NLink>
               </NavItem>
             )}
+            {currentUser && <Button onClick={handleSignout}>SIGN OUT</Button>}
           </DropMenu>
         )}
       </HamIcon>
