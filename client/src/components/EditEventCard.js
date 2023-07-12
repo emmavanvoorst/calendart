@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate} from "react-router-dom";
 
 import { styled } from "styled-components";
+import { Scrollbars } from 'react-custom-scrollbars';
 import DatePicker from "react-datepicker";
 import { SquircleLoader } from "react-awesome-loaders";
+import moment from "moment";
+
 
 const Wrapper = styled.div`
   padding: 0 15em;
@@ -21,7 +24,7 @@ const EventContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 55em;
+  height: 57em;
   width: 50vw;
   border: white 3px solid;
   margin: 0 4em 4em 0;
@@ -37,9 +40,39 @@ margin: 1.5em 0;
 const TitleLabel= styled.div`
 color: white;
 `;
-const InputTitle = styled.div``;
+const InputTitle = styled.div`
+`;
 const DescInput = styled.textarea`
 width: 100%;
+all:unset;
+border: white solid 2px;
+color: white;
+&::placeholder {
+    color: white;
+  }
+  &:focus {
+    border: pink solid 1px;
+  }
+
+  /* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+&.track {
+  bottom: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  width: 16px; /* must have some width */
+}
+
+/* Handle */
+&.thumbVertical {
+  position: absolute;
+  width: 50px; /* must have some width */
+}
 `;
 const TitleInput = styled.input`
   all: unset;
@@ -91,6 +124,9 @@ const Button = styled.button`
     background-color: white;
   }
 `;
+const Success= styled.div`
+
+`
 const Loading = styled.div`
   display: flex;
   justify-content: center;
@@ -100,10 +136,14 @@ const Loading = styled.div`
 
 const EditEventCard = () => {
   const { eventId } = useParams();
-  const [event, setEvent] = useState(null);
   const [formData, setFormData] = useState({});
+  const [event, setEvent] = useState(null);
+  const navigate = useNavigate()
+
+
 console.log(formData)
   console.log({ event });
+  // console.log( event.title );
   useEffect(() => {
     let mounted = true;
     fetch(`/calend_art/events/${eventId}`)
@@ -128,6 +168,7 @@ console.log(formData)
   }, [eventId]);
 
   const handleSubmit = (e) => {
+    
     e.preventDefault();
 
     if (
@@ -136,9 +177,8 @@ console.log(formData)
       !formData.address ||
       !formData.startDate ||
       !formData.endDate ||
-      !formData.startTime ||
       !formData.eventLink ||
-      !formData.desc
+      !formData.description
     ) {
       window.alert("Please fill in all the fields");
       return;
@@ -155,6 +195,7 @@ console.log(formData)
       .then((parse) => {
         if (parse.status === 200) {
           console.log("Event updated successfully");
+          navigate("/events")
         } else {
           console.log("Event update failed");
         }
@@ -166,6 +207,7 @@ console.log(formData)
 
   return (
     <Wrapper>
+      <div>
       <PageTitle>Edit Event</PageTitle>
       {event ? (
         <EventContainer>
@@ -177,8 +219,8 @@ console.log(formData)
               type="text"
               name="title"
               required
+              value={formData.title || event.title}
               placeholder={event.title}
-              value={formData.title || ""}
               onChange={(event) =>
                 setFormData({ ...formData, title: event.target.value })
               }
@@ -191,7 +233,7 @@ console.log(formData)
               name="name"
               required
               placeholder={event.location.name}
-              value={formData.name || ""}
+              value={formData.name || event.location.name}
               onChange={(event) =>
                 setFormData({ ...formData, name: event.target.value })
               }
@@ -204,7 +246,7 @@ console.log(formData)
               name="address"
               required
               placeholder={event.location.address}
-              value={formData.address}
+              value={formData.address || event.location.address}
               onChange={(event) =>
                 setFormData({ ...formData, address: event.target.value })
               }
@@ -217,7 +259,7 @@ console.log(formData)
                 type="text"
                 name="website"
                 placeholder= {event.url}
-                value={formData.eventLink || ""}
+                value={formData.eventLink || event.url}
                 onChange={(event) =>
                   setFormData({ ...formData, eventLink: event.target.value })
                 }
@@ -245,6 +287,7 @@ console.log(formData)
           <DatePicker
             selected={formData.startDate}
             minDate={new Date(formData.startDate)}
+            value={moment(formData.startDate).format("yyyy-MM-DD") || moment(event.start_date).format("yyyy-MM-DD")}
               name="startDate"
               onChange={(date) => setFormData({ ...formData, startDate: date })}
               />
@@ -254,12 +297,14 @@ console.log(formData)
           <DatePicker
             selected={formData.endDate}
             minDate={new Date(formData.startDate)}
+            value={moment(formData.endDate).format("yyyy-MM-DD") || moment(event.end_date).format("yyyy-MM-DD")}
               onChange={(date) => setFormData({ ...formData, endDate: date })}
               
             />
           </Label>
           <Label>
             <Title>Description</Title>
+            
             <DescInput
               type="text"
               name="description"
@@ -267,14 +312,12 @@ console.log(formData)
               rows="7"
               cols="35"
               placeholder={event.description}
-              value={formData.description}
+              value={formData.description || event.description}
               onChange={(event) =>
                 setFormData({ ...formData, description: event.target.value })
               }
             />
           </Label>
-
-          
           <Button type="submit" onClick={handleSubmit}>Save Changes</Button>
           </InputContainer>
         </EventContainer>
@@ -283,6 +326,7 @@ console.log(formData)
           <SquircleLoader />
         </Loading>
       )}
+      </div>
     </Wrapper>
   );
 };

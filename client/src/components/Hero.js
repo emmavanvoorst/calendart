@@ -1,8 +1,7 @@
-import { styled } from "styled-components";
-import moment from "moment";
-import heroimg from "../imgs/heroimg.png";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { styled } from "styled-components";
+import heroimg from "../imgs/heroimg.png";
 
 const Container = styled.div`
   position: relative;
@@ -45,12 +44,6 @@ const Title = styled.div`
 `;
 const Desc = styled.div`
   margin-bottom: 2em;
-`;
-const Date = styled.div`
-  /* position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
 `;
 
 const NLink = styled(NavLink)`

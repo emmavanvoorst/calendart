@@ -1,9 +1,7 @@
 import { useState, useContext } from "react";
-import { styled, css } from "styled-components";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
-
-import { RxHamburgerMenu } from "react-icons/rx";
+import { styled, css } from "styled-components";
 import moment from "moment";
 
 const Container = styled.div`
@@ -20,16 +18,6 @@ const Container = styled.div`
     height: 6em;
   }
 `;
-const NavItem = styled.div`
-  font-size: 2rem;
-  color: white;
-  font-weight: bold;
-  margin-right: 2em;
-  cursor: pointer;
-  @media screen and (max-width: 1400px) {
-    font-size: 1.4rem;
-  }
-`;
 const NavTitle = styled.div`
   color: white;
   font-weight: bold;
@@ -41,6 +29,26 @@ const NavTitle = styled.div`
     font-size: 2.3rem;
   }
 `;
+const NavItem = styled.div`
+  font-size: 2rem;
+  color: white;
+  font-weight: bold;
+  margin-right: 2em;
+  cursor: pointer;
+  @media screen and (max-width: 1400px) {
+    font-size: 1.4rem;
+  }
+`;
+
+const Nav = styled.div`
+margin-top: 0.5em;
+  display: flex;
+@media screen and (max-width: 1400px) {
+   margin-top: 1.5em;
+  display: flex;
+  }
+  
+`
 
 const Title = styled.p`
   font-family: "Instrument Sans", sans-serif;
@@ -67,6 +75,10 @@ const Button = styled.button`
     background-color: white;
     color: darkseagreen;
   }
+  @media screen and (max-width: 1400px) {
+   padding: 1em 1.5em;
+   margin-top: 0.5em;
+  }
   @media screen and (max-width: 830px) {
    padding: 0.05em 1.5em;
    margin-top: 0.5em;
@@ -76,14 +88,14 @@ const Button = styled.button`
 const HamburgerMenu = styled.div`
   display: flex;
   flex-direction: row;
-  @media screen and (max-width: 830px) {
+  @media screen and (max-width: 900px) {
     display: none;
   }
 `;
 const HamIcon = styled.div`
   cursor: pointer;
   position: absolute;
-  @media screen and (max-width: 830px) {
+  @media screen and (max-width: 900px) {
     display: flex;
   }
 `;
@@ -100,7 +112,7 @@ const DropMenu = styled.div`
 `;
 const HamAni = styled.div`
   cursor: pointer;
-  @media screen and (min-width: 800px) {
+  @media screen and (min-width: 900px) {
     display: none;
   }
 `;
@@ -193,6 +205,8 @@ const NavBar = () => {
         </NLink>
       </NavTitle>
       <HamburgerMenu>
+
+      <Nav>
         <NavItem>
           <NLink to="/events">EVENTS</NLink>
         </NavItem>
@@ -208,6 +222,7 @@ const NavBar = () => {
             <NLink to="/signin">LOG IN</NLink>
           </NavItem>
         )}
+        </Nav>
         {currentUser && <Button onClick={handleSignout}>SIGN OUT</Button>}
       </HamburgerMenu>
 

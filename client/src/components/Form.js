@@ -90,7 +90,6 @@ const Form = () => {
       !formData.address ||
       !formData.startDate ||
       !formData.endDate ||
-      !formData.startTime ||
       !formData.eventLink ||
       !formData.desc
     ) {

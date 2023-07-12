@@ -14,8 +14,9 @@ const Wrapper = styled.div`
 const EventContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
-  height: 25em;
+  height: 40em;
   width: 100%;
   border: white 3px solid;
   margin: 0 4em 4em 0;
@@ -25,6 +26,7 @@ const EventContainer = styled.div`
   @media screen and (max-width: 700px){
     width: 80em;
     font-size: 0.8rem;
+    height: 35em;
   }
 `;
 const Title = styled.div`
@@ -45,13 +47,6 @@ const FeatureTitle = styled.div`
   font-size: 2rem;
   color:darkseagreen;
   background-color: white;
-`;
-const Link = styled.a`
-  text-decoration: none;
-  color: green;
-  &:hover{
-  color:pink;
-}
 `;
 const Button = styled.button`
 /* margin-top: 2em; */
@@ -104,7 +99,7 @@ const Loading =styled.div`
 `
 const WideEventCard = () => {
   const [events, setEvents] = useState([]);
-  console.log({ events });
+
   useEffect(() => {
     let mounted = true;
     console.log({ events });
@@ -145,7 +140,7 @@ const WideEventCard = () => {
             </div>
             <div>Start: {moment(event.start_date).format("DD MMMM, yy")}</div>
             <div>End: {moment(event.end_date).format("DD MMMM, yy")}</div>
-            <Description>Description: {event.description}</Description>
+            <Description>Description:<br/> {event.description}</Description>
             <Button as="a" href={event.url}>
               Go to {event.location.name}
             </Button>

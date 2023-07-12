@@ -21,23 +21,16 @@ const EventContainer = styled.div`
   width: 40vw;
   border: white 3px solid;
   margin: 0 4em 4em 0;
-  padding: 5em;
+  padding: 3em 5em  0 5em;
   font-family: 'Roboto Mono', monospace;
   color: white;
-  @media screen and (max-width: 1400px){
-    width: 35vw;
+  @media screen and (max-width: 800px){
+    width: 100%;
     padding:2em;
     font-size: 0.8rem;
     height: 55em;
   }
 `;
-const Link = styled.a`
-/* text-decoration: none;
-color: green;
-&:hover{
-  color:pink;
-} */
-`
 const Title = styled.div`
 font-size: 2rem;
 margin-bottom: 1em;
@@ -46,7 +39,7 @@ const Flex = styled.div`
 display: flex;
 `
 const Text =styled.div`
-margin-bottom: 1em;
+margin-bottom: 2.5em;
 `
 const Loading =styled.div`
   display: flex;
@@ -68,7 +61,7 @@ color: white;
 `
 
 const Button = styled.button`
-margin-top: 5em;
+margin-top: 3em;
   display: inline-block;
   padding: 0.75rem 1.25rem;
   color: #fff;
@@ -177,10 +170,10 @@ const EventCard = () => {
             }</Flex>
             <Text>{event.location.name}</Text>
             <Text>{event.location.address}</Text>
-            <Text>Start time: {!event.start_time ? <Text>N/A</Text>: event.start_time}</Text>
+            <Text>Start time: {!event.start_time ? <div>N/A</div>: event.start_time}</Text>
             <Text>Start: {moment(event.start_date).format("DD MMMM, yy")}</Text>
             <Text>End: {moment(event.end_date).format("DD MMMM, yy")}</Text>
-            <Text>Description: {event.description}</Text>
+            <Text>Description:<br/> {event.description}</Text>
             <Button as="a" href={event.url}>
               Go to {event.location.name}
             </Button>
