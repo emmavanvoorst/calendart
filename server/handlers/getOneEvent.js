@@ -19,7 +19,7 @@ const options = {
 const getOneEvent = async (request, response) => {
   const client = new MongoClient(MONGO_URI, options);
   const eventId = request.params.eventId;
-
+  
   try {
     await client.connect();
     const db = client.db("calend_art");
@@ -31,7 +31,17 @@ const getOneEvent = async (request, response) => {
     result
       ? response
           .status(200)
-          .json({ status: 200, data: result, message: "event details" })
+          .json({ status: 200, data: {
+            title: result.title,
+            name: result.location.name,
+            address: result.location.address,
+            startDate: result.start_date,
+            endDate: result.end_date,
+            startTime: result.start_time,
+            eventLink: result.url,
+            desc: result.description,
+
+          }, message: "event details" })
       : response.status(404).json({ status: 404, message: "Not Found" });
   } catch (error) {
     console.error(error);

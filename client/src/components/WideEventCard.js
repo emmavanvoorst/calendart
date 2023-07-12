@@ -7,10 +7,18 @@ const Wrapper = styled.div`
   padding: 0 10vw;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   @media screen and (max-width: 700px){
     padding: 1em;
   }
 `;
+
+const Container = styled.div`
+display: flex;
+flex-direction: column;
+
+`
 const EventContainer = styled.div`
   display: flex;
   align-items: center;
@@ -44,6 +52,7 @@ margin: 1em 0 1em 0;
   }
 `
 const FeatureTitle = styled.div`
+  width: 10em;
   font-size: 2rem;
   color:darkseagreen;
   background-color: white;
@@ -127,9 +136,11 @@ const WideEventCard = () => {
 
   return (
     <Wrapper>
-      <FeatureTitle>Featured Events</FeatureTitle>
+     <Container>
+     {events.length ? <FeatureTitle>Featured Events</FeatureTitle> : null}
       {events.length > 0 ? (
         displayedEvents.map((event, index) => (
+          
           <EventContainer key={index}>
             <Title>{event.title}</Title>
             <div>{event.location.name}</div>
@@ -145,12 +156,14 @@ const WideEventCard = () => {
               Go to {event.location.name}
             </Button>
           </EventContainer>
+         
         ))
       ) : (
         <Loading>
           <SquircleLoader />
         </Loading>
       )}
+      </Container>
     </Wrapper>
   );
 };

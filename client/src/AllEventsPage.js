@@ -12,15 +12,12 @@ const Container = styled.div`
   
   
 `;
-const Title = styled.div`
-color: white;
-font-size: 3rem;
-`
+
 
 const Events = () => {
   return (
     <Container>
-      <Title>All Events</Title>
+     
       <EventCard />
     </Container>
   );

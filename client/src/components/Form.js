@@ -7,15 +7,30 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-time-picker/dist/TimePicker.css";
 
 
+
+const Wrapper =styled.div`
+display: flex;
+justify-content:center;
+align-items: center;
+`
 const Container = styled.div`
   display: flex;
+  width: 50em;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: left;
+  padding: 5em;
+  border: white solid 2px;
   
 `;
+const FormTitle = styled.div`
+color: white;
+font-size: 2rem;
+margin: 0 0 1em 0.4em;
+`
 const Label = styled.div`
-position: relative;
+display: flex;
+flex-direction: column;
   padding-bottom: 3em;
   color: black;
   
@@ -38,9 +53,16 @@ const DescInput = styled.textarea`
 const SubmitInput = styled.button`
   all: unset;
   cursor: pointer;
-  background-color: pink;
+  border: white 2px solid;
   padding: 1em 3em 1em 3em;
   width: 10em;
+  text-align: center;
+  color: white;
+  &:hover{
+    background-color: white;
+    color: darkseagreen;
+    font-weight: bold;
+  }
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
@@ -50,17 +72,9 @@ const Flex= styled.div`
   display: flex;
 `
 const InputTitle=styled.label`
-position:absolute;
-left: 12%;
-top: 10px;
-transition: all 0.5s ease;
-pointer-events: none;
-&:focus{
-  display:block;
-  color: black;
-  top: -20px;
-  font-size: 14px;
-}
+color:white;
+font-size: 0.9rem;
+margin-left: 0.9em;
 `
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -79,7 +93,6 @@ const Form = () => {
 
   useEffect(() => {
     const isFormEmpty = Object.values(formData).some(value => value === '' || value === undefined);
-  console.log(formData)
     setDisabled(isFormEmpty);
   }, [formData]);
 
@@ -96,8 +109,7 @@ const Form = () => {
       window.alert("Please fill in all the fields");
       return;
     }
-
-    console.log(formData.startTime);
+    
     fetch("/calend_art/events/create", {
       method: "POST",
 
@@ -134,14 +146,15 @@ const Form = () => {
   };
 
   return (
-    <>
+    <Wrapper>
       <Container>
         <Label>
+         <FormTitle>Add a New Event</FormTitle>
           <InputTitle>Event Title</InputTitle>
           <Input
             type="text"
             name="title"
-            placeholder="Event Title"
+            placeholder="Enter an event title"
             value={formData.title}
             onChange={(event) =>
               setFormData({ ...formData, title: event.target.value })
@@ -150,16 +163,16 @@ const Form = () => {
         </Label>
         <Flex>
         <Label>
-          
+          <InputTitle>Name of Location</InputTitle>
           <Input
             type="text"
             name="name"
-            placeholder
+            placeholder= "Name of event location"
             value={formData.name}
             onChange={(event) =>
               setFormData({ ...formData, name: event.target.value })
             }
-          ></Input><InputTitle>Name of Location</InputTitle>
+          ></Input>
         </Label>
         <Label>
           <InputTitle>Address</InputTitle>
@@ -211,7 +224,7 @@ const Form = () => {
           <Input
             type="text"
             name="website"
-            placeholder="Link to Event"
+            placeholder="Provide a link to the event"
             value={formData.eventLink}
             onChange={(event) =>
               setFormData({ ...formData, eventLink: event.target.value })
@@ -225,6 +238,7 @@ const Form = () => {
             name="desc"
             rows="4"
             cols="35"
+            placeholder="Describe your event"
             value={formData.desc}
             onChange={(event) =>
               setFormData({ ...formData, desc: event.target.value })
@@ -235,7 +249,7 @@ const Form = () => {
           Create Event
         </SubmitInput>
       </Container>
-    </>
+    </Wrapper>
   );
 };
 

@@ -17,7 +17,7 @@ const EventContainer = styled.div`
   display: flex;
   align-items: left;
   flex-direction: column;
-  height: 55em;
+  min-height: 55em;
   width: 40vw;
   border: white 3px solid;
   margin: 0 4em 4em 0;
@@ -31,6 +31,10 @@ const EventContainer = styled.div`
     height: 55em;
   }
 `;
+const PageTitle = styled.div`
+color: white;
+font-size: 3rem;
+`
 const Title = styled.div`
 font-size: 2rem;
 margin-bottom: 1em;
@@ -64,6 +68,7 @@ const Button = styled.button`
 margin-top: 3em;
   display: inline-block;
   padding: 0.75rem 1.25rem;
+  margin-bottom: 2em;
   color: #fff;
   text-transform: uppercase;
   text-decoration: none;
@@ -157,6 +162,7 @@ const EventCard = () => {
   return (
     <Wrapper>
       <div>
+      {filteredEvents.length ? <PageTitle>All Events</PageTitle> : null}
        {filteredEvents.length > 0 ? (
         filteredEvents.map((event, index) => (
           <EventContainer key={index}>
