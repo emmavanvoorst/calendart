@@ -39,12 +39,15 @@ const Input = styled.input`
   border: none;
   background-color: white;
   margin-left: 1em;
-  width: 15em;
+  width: 20em;
   height: 2em;
   &:focus {
     border: none;
   }
 `;
+const TimeInput = styled.input`
+width: 8em;
+`
 const DescInput = styled.textarea`
   border: none;
   background-color: white;
@@ -206,7 +209,7 @@ const Form = () => {
         </Flex>
         <Label>
           <InputTitle>Start Time</InputTitle>
-          <input
+          <TimeInput
             type="time"
             id="appt"
             name="appt"
