@@ -113,7 +113,7 @@ const Form = () => {
       return;
     }
     
-    fetch("https://calendart-4zawbxdfw-emmavanvoorst.vercel.app/calend_art/events/create", {
+    fetch("https://calendart.vercel.app/calend_art/events/create", {
       method: "POST",
 
       body: JSON.stringify({

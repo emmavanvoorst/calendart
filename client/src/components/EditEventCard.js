@@ -136,7 +136,7 @@ const EditEventCard = () => {
 
   useEffect(() => {
     let mounted = true;
-    fetch(`https://calendart-4zawbxdfw-emmavanvoorst.vercel.app/calend_art/events/${eventId}`)
+    fetch(`https://calendart.vercel.app/calend_art/events/${eventId}`)
       .then((response) => response.json())
       .then((parse) => {
         if (parse.status === 400 || parse.status === 500) {

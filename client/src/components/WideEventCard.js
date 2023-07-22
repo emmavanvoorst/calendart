@@ -112,7 +112,7 @@ const WideEventCard = () => {
   useEffect(() => {
     let mounted = true;
     console.log({ events });
-    fetch(`https://calendart-4zawbxdfw-emmavanvoorst.vercel.app/calend_art/events/read`)
+    fetch(`https://calendart.vercel.app/calend_art/events/read`)
       .then((response) => response.json())
       .then((parse) => {
         if (parse.status === 400 || parse.status === 500) {
