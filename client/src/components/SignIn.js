@@ -54,7 +54,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
 
   const HandleClick = () => {
-    fetch("/calend_art/users/signin", {
+    fetch("calendart-4zawbxdfw-emmavanvoorst.vercel.app/calend_art/users/signin", {
       method: "POST",
 
       body: JSON.stringify({
