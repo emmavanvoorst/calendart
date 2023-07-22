@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { styled } from "styled-components";
 import { Scrollbars } from "react-custom-scrollbars";
-import { SquircleLoader } from "react-awesome-loaders";
+// import { SquircleLoader } from "react-awesome-loaders";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-time-picker/dist/TimePicker.css";
@@ -312,7 +312,7 @@ const EditEventCard = () => {
           </EventContainer>
         ) : (
           <Loading>
-            <SquircleLoader />
+            LOADING....
           </Loading>
         )}
       </div>

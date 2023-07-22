@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { SquircleLoader } from "react-awesome-loaders";
+// import { SquircleLoader } from "react-awesome-loaders";
 import moment from "moment";
 
 const Wrapper = styled.div`
@@ -160,7 +160,7 @@ const WideEventCard = () => {
         ))
       ) : (
         <Loading>
-          <SquircleLoader />
+          LOADING...
         </Loading>
       )}
       </Container>

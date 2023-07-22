@@ -3,7 +3,7 @@ import { UserContext } from "./context/UserContext";
 import { NavLink } from "react-router-dom";
 
 import { styled } from "styled-components";
-import { SquircleLoader } from "react-awesome-loaders";
+// import { SquircleLoader } from "react-awesome-loaders";
 import {MdOutlineDelete} from 'react-icons/md';
 import {FiEdit3} from 'react-icons/fi'
 import moment from "moment";
@@ -189,7 +189,7 @@ const EventCard = () => {
         ))
       ) : (
         <Loading>
-          <SquircleLoader />
+          LOADING...
         </Loading>
       )}
       </div>
