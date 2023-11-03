@@ -26,14 +26,14 @@ This is a website built to organize all the art events taking place in the city 
 
 ## Technology Used
 ### Frontend
-*Create React APP // Creating a React app and its environment
-*React hooks // Management of UI components
-*React Router // Management of router
-*styled-components // Style with CSS-in-JS components
-*fetch // Communicating with back-end server (Node.js) via API
-*Vercel // Deployed via Vercel
+* Create React APP // Creating a React app and its environment
+* React hooks // Management of UI components
+* React Router // Management of router
+* styled-components // Style with CSS-in-JS components
+* fetch // Communicating with back-end server (Node.js) via API
+* Vercel // Deployed via Vercel
 
 ### Backend
-*Node.js // Backend environment
-*MongoDB // Storing data
-*Vercel // Deployed via Vercel
+* Node.js // Backend environment
+* MongoDB // Storing data
+* Vercel // Deployed via Vercel
