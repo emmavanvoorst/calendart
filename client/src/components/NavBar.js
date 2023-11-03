@@ -186,10 +186,6 @@ const NavBar = () => {
 
   const handleClick = () => {
     setActive((prevState) => !prevState);
-    // setActive(true);
-    // if (active === true) {
-    //   setActive(false);
-    // }
   };
 
   return (

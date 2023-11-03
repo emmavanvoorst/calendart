@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
-// import { SquircleLoader } from "react-awesome-loaders";
 import moment from "moment";
 
 const Wrapper = styled.div`
